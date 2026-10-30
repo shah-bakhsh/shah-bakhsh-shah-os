@@ -97,15 +97,15 @@ export default function Home() {
         setHistoryIndex(nextIndex >= commandHistory.length ? -1 : nextIndex);
         setTerminalInput(nextIndex >= commandHistory.length ? "" : commandHistory[nextIndex]);
       }
-    } else if (event.key === "Escape") setTerminalOpen(false);
+    } else if (event.key === "Escape") closeTerminal();
   };
 
   useEffect(() => {
     const handleGlobalKeyDown = (event: WindowEventMap["keydown"]) => {
       const target = event.target as HTMLElement | null;
       const isTyping = target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
-      if (event.key === "/" && !isTyping) { event.preventDefault(); setTerminalOpen(true); }
-      if (event.key === "Escape") setTerminalOpen(false);
+      if (event.key === "/" && !isTyping) { event.preventDefault(); openTerminal(); }
+      if (event.key === "Escape") closeTerminal();
     };
     window.addEventListener("keydown", handleGlobalKeyDown);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
