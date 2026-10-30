@@ -25,12 +25,12 @@ SHAH.OS is an original, lightweight portfolio designed for the AWS Student Build
 | [BalNER](https://github.com/shah-bakhsh/BalNER) | Balochi named-entity recognition | Repository reports 0.7034 entity-level F1 on its documented test set and describes class-level limitations. |
 | [BalTokenizer](https://github.com/shah-bakhsh/BalTokenizer) | Balochi subword tokenization | Repository reports a 48K Unigram configuration, 0.0% unknown-token rate, and 99.9% character coverage. |
 | BalOCR | OCR research for Balochi script | Research direction; public methodology and evaluation are not linked here yet. |
-| BalNLP | Broader Balochi language-technology ecosystem | Ecosystem direction connecting the individual research components. |
+| [BalNLP](https://github.com/shah-bakhsh/BalNLP) | Arabic-script Balochi NLP workspace with a Python library, FastAPI service, and RTL interface | Repository documents local integration checks for four model components; it distinguishes integration evidence from model-quality claims. |
 
 Additional projects:
 - [CrisisPilot AI](https://github.com/shah-bakhsh/CrisisPilot-AI)
 - [PathPilot AI](https://github.com/shah-bakhsh/pathpilot-ai)
-- [GitHub profile and other work](https://github.com/shah-bakhsh)
+- [ReelForge and other work](https://github.com/shah-bakhsh)
 
 Research metrics are reproduced from the linked repository documentation and may change as projects are updated. Consult each repository for methodology, limitations, and full evaluation details.
 
