@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent }
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
-import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck, CornerDownLeft } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck, CornerDownLeft, Sparkles } from "lucide-react";
 
 const projects = [
   { code: "01", name: "BalBERT", type: "Language model", description: "Domain-adaptive language representation work focused on strengthening NLP foundations for Balochi.", tags: ["Transformers", "XLM-R", "NLP"], href: "https://github.com/shah-bakhsh/BalBERT" },
@@ -45,6 +45,7 @@ export default function Home() {
   ]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const terminalInputRef = useRef<HTMLInputElement>(null);
   const terminalOutputRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -145,11 +146,25 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    const updateProgress = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(scrollable > 0 ? window.scrollY / scrollable : 0);
+    };
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    return () => {
+      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
+    };
+  }, []);
+
   const nav = [{ label: "About", href: "#about" }, { label: "Superpowers", href: "#superpowers" }, { label: "Research Lab", href: "#lab" }, { label: "Projects", href: "#projects" }];
 
   return (
-    <main className="overflow-hidden">
-      <header className="relative z-20 border-b border-white/10">
+    <main className="overflow-hidden"><motion.div aria-hidden="true" className="fixed left-0 right-0 top-0 z-[70] h-[2px] origin-left bg-[#f5c518] shadow-[0_0_14px_rgba(245,197,24,.75)]" style={{ scaleX: scrollProgress }} />
+      <motion.header initial={{ y: -24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.65, ease: "easeOut" }} className="sticky top-0 z-50 border-b border-white/[.08] bg-[#08090a]/80 backdrop-blur-2xl">
         <div className="shell flex h-[76px] items-center justify-between">
           <a href="#" className="flex items-center gap-3" aria-label="SHAH.OS home">
             <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#f5c518] text-sm font-black text-black">S.</span>
@@ -159,33 +174,33 @@ export default function Home() {
             {nav.map(item => <a key={item.label} href={item.href} className="text-xs text-white/60 transition hover:text-[#f5c518]">{item.label}</a>)}
           </nav>
           <div className="hidden items-center gap-3 sm:flex"><button onClick={openTerminal} className="inline-flex items-center gap-2 rounded-full border border-[#f5c518]/35 px-4 py-2 text-xs text-[#f5c518] transition hover:bg-[#f5c518] hover:text-black"><Terminal size={14} /> Open terminal <span className="text-[9px] opacity-60">/</span></button><a href="mailto:shahbakhshtech@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518]">Let&apos;s connect <ArrowUpRight size={14} /></a></div>
-          <button className="md:hidden" aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
+          <button className="grid size-11 place-items-center rounded-full border border-white/10 text-white/75 transition hover:border-[#f5c518]/50 hover:text-[#f5c518] md:hidden" aria-label="Toggle navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button>
         </div>
-        {menuOpen && <nav className="shell flex flex-col gap-4 pb-6 md:hidden">{nav.map(item => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="text-sm text-white/70">{item.label}</a>)}</nav>}
-      </header>
+        {menuOpen && <motion.nav initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="shell flex flex-col gap-1 border-t border-white/[.06] pb-5 pt-3 md:hidden">{nav.map(item => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 text-sm text-white/70 transition hover:bg-white/[.04] hover:text-[#f5c518]">{item.label}</a>)}<button onClick={() => { setMenuOpen(false); openTerminal(); }} className="mt-2 flex min-h-11 items-center gap-2 rounded-xl bg-[#f5c518] px-4 text-left text-sm font-semibold text-black"><Terminal size={16} /> Open command terminal</button></motion.nav>}
+      </motion.header>
 
-      <section className="relative flex min-h-[690px] items-center border-b border-white/10">
+      <motion.section initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.12 }} transition={{ duration: 0.72, ease: "easeOut" }} className="relative flex min-h-[690px] items-center border-b border-white/10">
         <div className="grid-bg absolute inset-0 opacity-70" />
-        <div className="pointer-events-none absolute -right-40 top-10 h-[520px] w-[520px] rounded-full bg-[#f5c518]/[.07] blur-[110px]" />
+        <motion.div aria-hidden="true" animate={{ x: [0, -24, 0], y: [0, 22, 0], scale: [1, 1.08, 1] }} transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }} className="pointer-events-none absolute -right-40 top-10 h-[520px] w-[520px] rounded-full bg-[#f5c518]/[.09] blur-[110px]" />
         <div className="shell relative grid items-center gap-14 py-24 lg:grid-cols-[1.25fr_.75fr]">
           <div>
-            <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6 }} className="eyebrow mb-8 flex items-center gap-3"><span className="h-px w-8 bg-[#f5c518]" /> Independent AI builder · Pakistan</motion.div>
+            <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6 }} className="eyebrow mb-8 flex items-center gap-3"><span className="h-px w-8 bg-[#f5c518]" /> Independent AI builder · Open to collaboration</motion.div>
             <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .08 }} className="max-w-4xl text-[clamp(58px,9vw,112px)] font-semibold leading-[.88] tracking-[-.075em]">AI should speak<br /><span className="text-[#f5c518]">every language.</span></motion.h1>
             <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .16 }} className="mt-9 max-w-xl text-base leading-8 text-white/55 md:text-lg">I&apos;m Shah Bakhsh. I build intelligent systems across language models, machine learning, and agentic AI. One mission drives much of my work: helping bring Balochi into the future of technology.</motion.p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <Button asChild><a href="#lab">Explore my research <ArrowUpRight size={16} /></a></Button>
               <Button asChild variant="outline"><a href="#projects">View projects <ArrowDown size={15} /></a></Button>
             </div>
-            <p className="mt-8 text-[11px] tracking-wide text-white/35">A personal workspace for experiments, research, and things worth building.</p><button onClick={() => setTerminalOpen(true)} className="mt-5 inline-flex min-h-11 items-center gap-3 rounded-full border border-[#f5c518]/25 bg-[#f5c518]/[.06] px-4 py-2.5 text-left text-xs text-white/65 transition hover:border-[#f5c518]/60 hover:text-[#f5c518]"><Terminal size={15} className="text-[#f5c518]" /><span>Curious? Open my command terminal</span><kbd className="rounded border border-white/15 px-1.5 py-0.5 text-[10px] text-white/40">/</kbd></button>
+            <p className="mt-8 text-[11px] tracking-wide text-white/35">A personal workspace for experiments, research, and things worth building.</p><button onClick={() => setTerminalOpen(true)} className="mt-5 inline-flex min-h-11 items-center gap-3 rounded-full border border-[#f5c518]/25 bg-[#f5c518]/[.06] px-4 py-2.5 text-left text-xs text-white/65 transition hover:border-[#f5c518]/60 hover:text-[#f5c518]"><Terminal size={15} className="text-[#f5c518]" /><span>Explore SHAH.OS interactively</span><kbd className="rounded border border-white/15 px-1.5 py-0.5 text-[10px] text-white/40">/</kbd></button>
           </div>
           <motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .8, delay: .2 }} className="relative mx-auto w-full max-w-[390px]">
             <div className="absolute inset-8 rounded-full bg-[#f5c518]/10 blur-3xl" />
             <div className="panel relative aspect-square overflow-hidden p-7">
-              <div className="flex items-center justify-between text-[10px] tracking-[.2em] text-white/35"><span>SHAH.OS / CORE</span><span className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-[#f5c518]" /> ONLINE</span></div>
+              <div className="flex items-center justify-between text-[10px] tracking-[.2em] text-white/35"><span>SHAH.OS / CORE</span><span className="flex items-center gap-2"><motion.span animate={{ opacity: [1, .35, 1], scale: [1, .8, 1] }} transition={{ duration: 2, repeat: Infinity }} className="h-1.5 w-1.5 rounded-full bg-[#f5c518]" /> ONLINE</span></div>
               <div className="absolute inset-0 grid place-items-center">
                 <div className="relative grid h-52 w-52 place-items-center rounded-full border border-[#f5c518]/30">
-                  <div className="absolute inset-4 rounded-full border border-white/10" />
-                  <div className="absolute inset-10 rounded-full border border-dashed border-[#f5c518]/35" />
+                  <motion.div aria-hidden="true" animate={{ rotate: -360 }} transition={{ duration: 72, repeat: Infinity, ease: "linear" }} className="absolute inset-4 rounded-full border border-white/10" />
+                  <motion.div aria-hidden="true" animate={{ rotate: 360 }} transition={{ duration: 48, repeat: Infinity, ease: "linear" }} className="absolute inset-10 rounded-full border border-dashed border-[#f5c518]/35" />
                   <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-[#f5c518] bg-[#f5c518] shadow-[0_0_70px_rgba(245,197,24,.2)]"><Image src="https://avatars.githubusercontent.com/u/226354638?v=4" alt="Shah Bakhsh" width={112} height={112} priority unoptimized className="h-full w-full object-cover" /></div>
                   <span className="absolute -right-3 top-8 rounded-full border border-white/10 bg-[#101113] px-3 py-1.5 text-[9px] text-white/60">LEARN</span>
                   <span className="absolute -left-5 bottom-10 rounded-full border border-white/10 bg-[#101113] px-3 py-1.5 text-[9px] text-white/60">BUILD</span>
@@ -194,11 +209,11 @@ export default function Home() {
               </div>
               <div className="absolute bottom-6 left-7 right-7 flex justify-between border-t border-white/10 pt-4 text-[9px] tracking-[.15em] text-white/35"><span>AI ENGINEERING</span><span>AI / NLP / SYSTEMS</span></div>
             </div>
-            <div className="mt-4 flex items-center justify-between px-1 text-[10px] tracking-[.18em] text-white/30"><span>BUILDING FROM THE EDGE</span><span>BASED IN PAKISTAN</span></div>
+            <div className="mt-4 flex items-center justify-between px-1 text-[10px] tracking-[.18em] text-white/30"><span>BUILDING FROM THE EDGE</span><span>BUILDING ACROSS BORDERS</span></div>
           </motion.div>
         </div>
         <div className="absolute bottom-0 left-1/2 h-12 w-px bg-gradient-to-b from-[#f5c518]/60 to-transparent" />
-      </section>
+      </motion.section>
 
       <section aria-label="The mission" className="relative overflow-hidden border-b border-white/10 bg-[#f1eee3] py-24 text-[#11110d] md:py-32"><div className="shell relative"><p className="text-[10px] font-semibold tracking-[.24em] text-[#8a7018]">A BELIEF THAT BECAME A BODY OF WORK</p><h2 className="mt-12 max-w-5xl text-5xl font-semibold leading-[.98] tracking-[-.07em] md:text-7xl lg:text-[88px]">Some languages are missing from the future.<br /><span className="text-[#9a7710]">I want to help change that.</span></h2><div className="mt-14 flex flex-col justify-between gap-8 border-t border-black/20 pt-6 md:flex-row md:items-end"><p className="max-w-xl text-base leading-8 text-black/65 md:text-lg">A language should not need millions of speakers to deserve a place in technology. It deserves tools, data, models, and the chance to be understood.</p><span className="text-[9px] tracking-[.2em] text-[#8a7018]">THE MISSION / BALOCHI AI</span></div></div></section>\n\n      <section id="about" className="section-pad border-b border-white/10">
         <div className="shell grid gap-12 md:grid-cols-[.7fr_1.3fr]">
@@ -209,7 +224,7 @@ export default function Home() {
 
       <section id="superpowers" className="section-pad border-b border-white/10">
         <div className="shell"><div className="mb-14 flex flex-wrap items-end justify-between gap-6"><div><p className="eyebrow mb-5">02 / Technical range</p><h2 className="section-title">My tech <span className="gold">superpowers.</span></h2></div><p className="max-w-sm text-sm leading-7 text-white/45">A practical toolkit for taking ideas from datasets and experiments to usable AI-powered products.</p></div>
-          <div className="grid gap-3 sm:grid-cols-2">{capabilities.map((item, i) => <div key={item.title} className="panel group p-7 transition hover:border-[#f5c518]/40"><div className="mb-12 flex items-center justify-between"><item.icon className="text-[#f5c518]" size={25} /><span className="text-xs text-white/25">0{i + 1}</span></div><h3 className="text-xl font-semibold">{item.title}</h3><p className="mt-3 max-w-sm text-sm leading-7 text-white/45">{item.detail}</p></div>)}</div>
+          <div className="grid gap-3 sm:grid-cols-2">{capabilities.map((item, i) => <motion.div key={item.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .55, delay: i * .09 }} whileHover={{ y: -7, borderColor: "rgba(245,197,24,.38)" }} className="panel group p-7 transition"><div className="mb-12 flex items-center justify-between"><item.icon className="text-[#f5c518]" size={25} /><span className="text-xs text-white/25">0{i + 1}</span></div><h3 className="text-xl font-semibold">{item.title}</h3><p className="mt-3 max-w-sm text-sm leading-7 text-white/45">{item.detail}</p></motion.div>)}</div>
           <div className="mt-5 flex flex-wrap gap-2">{["Python","PyTorch","TensorFlow","Hugging Face","Transformers","LangGraph","LangChain","RAG","FAISS","Chroma","FastAPI","OpenCV","Docker","Git"].map(skill => <span key={skill} className="rounded-md bg-white/[.045] px-3 py-2 text-[11px] text-white/50">{skill}</span>)}</div>
         </div>
       </section>
@@ -230,7 +245,7 @@ export default function Home() {
 
       <section id="projects" className="section-pad border-b border-white/10">
         <div className="shell"><div className="mb-14"><p className="eyebrow mb-5">04 / Selected work</p><h2 className="section-title">Built to <span className="gold">explore.</span></h2><p className="mt-5 max-w-lg text-sm leading-7 text-white/45">A selection of research projects and experiments. Open the repositories for source code, implementation details, and current project status.</p></div>
-          <div className="grid gap-3 md:grid-cols-2">{projects.map(project => <a key={project.code} href={project.href} target="_blank" rel="noreferrer" className="panel group flex min-h-[250px] flex-col justify-between p-7 transition hover:-translate-y-1 hover:border-[#f5c518]/40"><div className="flex items-center justify-between"><span className="text-[10px] tracking-[.18em] text-white/30">{project.code} / {project.type.toUpperCase()}</span><ArrowUpRight className="text-white/35 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#f5c518]" size={18} /></div><div><h3 className="text-2xl font-semibold tracking-tight">{project.name}</h3><p className="mt-3 max-w-md text-sm leading-7 text-white/45">{project.description}</p><div className="mt-5 flex flex-wrap gap-2">{project.tags.map(tag => <span key={tag} className="rounded bg-white/[.05] px-2.5 py-1.5 text-[9px] text-white/40">{tag}</span>)}</div></div></a>)}</div>
+          <div className="grid gap-3 md:grid-cols-2">{projects.map((project, i) => <motion.a key={project.code} href={project.href} target="_blank" rel="noreferrer" initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .55, delay: (i % 2) * .1 }} whileHover={{ y: -7, borderColor: "rgba(245,197,24,.42)" }} className="panel group flex min-h-[250px] flex-col justify-between p-7 transition"><div className="flex items-center justify-between"><span className="text-[10px] tracking-[.18em] text-white/30">{project.code} / {project.type.toUpperCase()}</span><ArrowUpRight className="text-white/35 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-[#f5c518]" size={18} /></div><div><h3 className="text-2xl font-semibold tracking-tight">{project.name}</h3><p className="mt-3 max-w-md text-sm leading-7 text-white/45">{project.description}</p><div className="mt-5 flex flex-wrap gap-2">{project.tags.map(tag => <span key={tag} className="rounded bg-white/[.05] px-2.5 py-1.5 text-[9px] text-white/40">{tag}</span>)}</div></div></a>)}</div>
         </div>
       </section>
 
@@ -238,14 +253,14 @@ export default function Home() {
         <div className="shell"><div className="panel relative overflow-hidden p-8 md:p-14"><div className="absolute -right-20 -top-28 h-80 w-80 rounded-full bg-[#f5c518]/10 blur-[90px]" /><div className="relative max-w-3xl"><p className="eyebrow mb-6">05 / The next collaboration</p><h2 className="text-5xl font-semibold leading-[.98] tracking-[-.06em] md:text-7xl">Have a meaningful problem? <span className="gold">Let&apos;s build.</span></h2><p className="mt-7 max-w-xl text-sm leading-7 text-white/50">I&apos;m interested in research, open-source collaboration, and building AI tools with real-world value. Reach out and let&apos;s start a conversation.</p><a href="mailto:shahbakhshtech@gmail.com" className="mt-9 inline-flex items-center gap-3 rounded-full bg-[#f5c518] px-6 py-3.5 text-sm font-bold text-black transition hover:bg-white">Contact me <ArrowUpRight size={16} /></a></div></div></div>
       </section>
 
-      <footer className="border-t border-white/10 py-8"><div className="shell flex flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left"><div><p className="text-sm font-bold tracking-[.16em]">SHAH<span className="text-[#f5c518]">.OS</span></p><p className="mt-2 text-[10px] text-white/30">Designed and built by Shah Bakhsh · Pakistan</p></div><div className="flex items-center gap-5 text-white/45"><a href="https://github.com/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[#f5c518]"><Github size={17} /></a><a href="https://linkedin.com/in/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[#f5c518]"><Linkedin size={17} /></a><a href="mailto:shahbakhshtech@gmail.com" aria-label="Email" className="transition hover:text-[#f5c518]"><ShieldCheck size={17} /></a></div><p className="text-[10px] text-white/25">© 2026 SHAH.OS · Built for the curious.</p></div></footer>
+      <footer className="border-t border-white/10 py-8"><div className="shell flex flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left"><div><p className="text-sm font-bold tracking-[.16em]">SHAH<span className="text-[#f5c518]">.OS</span></p><p className="mt-2 text-[10px] text-white/30">Designed and built by Shah Bakhsh</p></div><div className="flex items-center gap-5 text-white/45"><a href="https://github.com/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[#f5c518]"><Github size={17} /></a><a href="https://linkedin.com/in/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[#f5c518]"><Linkedin size={17} /></a><a href="mailto:shahbakhshtech@gmail.com" aria-label="Email" className="transition hover:text-[#f5c518]"><ShieldCheck size={17} /></a></div><p className="text-[10px] text-white/25">© 2026 SHAH.OS · Built for the curious.</p></div></footer>
 
       {terminalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-3 backdrop-blur-md sm:p-6" onMouseDown={(event) => { if (event.target === event.currentTarget) setTerminalOpen(false); }}>
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-3 backdrop-blur-md sm:p-6" onMouseDown={(event) => { if (event.target === event.currentTarget) closeTerminal(); }}>
           <motion.section role="dialog" aria-modal="true" aria-labelledby="terminal-title" initial={{ opacity: 0, y: 18, scale: .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} onKeyDown={handleTerminalDialogKeyDown} className="flex max-h-[min(82vh,720px)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[#f5c518]/25 bg-[#090a0b] shadow-[0_30px_120px_rgba(0,0,0,.65)]">
             <div className="flex items-center justify-between border-b border-white/10 bg-white/[.035] px-4 py-3 sm:px-5">
               <div className="flex items-center gap-3"><div className="flex gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[#ff625a]" /><span className="h-2.5 w-2.5 rounded-full bg-[#f5c518]" /><span className="h-2.5 w-2.5 rounded-full bg-[#35c978]" /></div><div><p id="terminal-title" className="text-xs font-semibold tracking-wide text-white/85">SHAH.OS TERMINAL</p><p className="mt-0.5 text-[9px] tracking-[.16em] text-white/35">INTERACTIVE PORTFOLIO SHELL</p></div></div>
-              <button onClick={() => setTerminalOpen(false)} aria-label="Close terminal" className="grid h-9 w-9 place-items-center rounded-lg text-white/50 transition hover:bg-white/10 hover:text-white"><X size={18} /></button>
+              <button onClick={closeTerminal} aria-label="Close terminal" className="grid h-9 w-9 place-items-center rounded-lg text-white/50 transition hover:bg-white/10 hover:text-white"><X size={18} /></button>
             </div>
             <div className="flex flex-wrap gap-2 border-b border-white/10 px-4 py-3 sm:px-5">{["help","about","skills","projects","research","balochi-ai","contact"].map((command) => <button key={command} onClick={() => runCommand(command)} className="rounded-full border border-white/10 px-3 py-1.5 text-[10px] text-white/55 transition hover:border-[#f5c518]/50 hover:text-[#f5c518]">{command}</button>)}</div>
             <div ref={terminalOutputRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-4 font-mono text-[11px] leading-6 sm:px-5 sm:text-xs" aria-live="polite" aria-relevant="additions text">
