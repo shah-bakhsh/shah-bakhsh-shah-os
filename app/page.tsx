@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
@@ -73,7 +73,7 @@ export default function Home() {
     setTerminalInput("");
   };
 
-  const handleTerminalKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+  const handleTerminalKeyDown = (event: ReactKeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") { event.preventDefault(); runCommand(terminalInput); }
     else if (event.key === "ArrowUp") {
       event.preventDefault();
@@ -92,7 +92,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const handleGlobalKeyDown = (event: KeyboardEvent) => {
+    const handleGlobalKeyDown = (event: WindowEventMap["keydown"]) => {
       const target = event.target as HTMLElement | null;
       const isTyping = target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
       if (event.key === "/" && !isTyping) { event.preventDefault(); setTerminalOpen(true); }
