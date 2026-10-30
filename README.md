@@ -9,6 +9,7 @@ SHAH.OS is the personal AI engineering portfolio of Shah Bakhsh. It brings toget
 - A mission-led opening and editorial story about language inclusion in technology.
 - AI engineering capabilities across LLMs, low-resource NLP, agentic workflows, retrieval, and computer vision.
 - An interactive Balochi AI research explorer covering BalBERT, BalPOS, BalNER, BalTokenizer, BalOCR, and BalNLP.
+- An interactive command terminal with `help`, `about`, `skills`, `projects`, `research`, `balochi-ai`, `contact`, and `clear` commands. Visitors can open it from the visible page hint, the header control, or the `/` keyboard shortcut; command chips, Enter, arrow-key history, Escape, and outside-click dismissal are supported.
 - Selected projects with direct links to source repositories.
 - Responsive navigation, keyboard focus states, and reduced-motion support.
 - Social metadata and search indexing metadata.
@@ -33,7 +34,7 @@ Results are linked to their project documentation. Consult each repository for e
 - TypeScript
 - Tailwind CSS v4
 - shadcn/ui foundation with Radix Slot, class-variance-authority, clsx, and tailwind-merge
-- Motion for React
+- Motion for React (terminal entrance transitions)
 - Lucide icons
 - GitHub Actions for type, lint, and build checks
 - AWS Amplify Hosting configuration for static Next.js export
