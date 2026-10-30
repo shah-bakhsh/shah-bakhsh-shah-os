@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck } from "lucide-react";
@@ -81,7 +82,7 @@ export default function Home() {
                 <div className="relative grid h-52 w-52 place-items-center rounded-full border border-[#f5c518]/30">
                   <div className="absolute inset-4 rounded-full border border-white/10" />
                   <div className="absolute inset-10 rounded-full border border-dashed border-[#f5c518]/35" />
-                  <div className="grid h-28 w-28 place-items-center rounded-full bg-[#f5c518] text-5xl font-black tracking-[-.1em] text-black shadow-[0_0_70px_rgba(245,197,24,.2)]">SB</div>
+                  <div className="h-28 w-28 overflow-hidden rounded-full border-2 border-[#f5c518] bg-[#f5c518] shadow-[0_0_70px_rgba(245,197,24,.2)]"><Image src="https://avatars.githubusercontent.com/u/226354638?v=4" alt="Shah Bakhsh" width={112} height={112} priority unoptimized className="h-full w-full object-cover" /></div>
                   <span className="absolute -right-3 top-8 rounded-full border border-white/10 bg-[#101113] px-3 py-1.5 text-[9px] text-white/60">LEARN</span>
                   <span className="absolute -left-5 bottom-10 rounded-full border border-white/10 bg-[#101113] px-3 py-1.5 text-[9px] text-white/60">BUILD</span>
                   <span className="absolute -bottom-3 right-8 rounded-full border border-white/10 bg-[#101113] px-3 py-1.5 text-[9px] text-white/60">RESEARCH</span>
