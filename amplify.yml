@@ -1,12 +1,17 @@
 version: 1
 frontend:
   phases:
+    preBuild:
+      commands:
+        - npm install
     build:
       commands:
-        - echo Publishing the static SHAH.OS portfolio
+        - npm run typecheck
+        - npm run build
   artifacts:
-    baseDirectory: public
+    baseDirectory: out
     files:
       - '**/*'
   cache:
-    paths: []
+    paths:
+      - node_modules/**/*
