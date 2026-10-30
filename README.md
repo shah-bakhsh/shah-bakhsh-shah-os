@@ -1,47 +1,31 @@
 # SHAH.OS
 
-An interactive AI engineering portfolio by Shah Bakhsh, focused on AI systems, low-resource language technology, and applied research.
+An interactive AI engineering portfolio by Shah Bakhsh, focused on low-resource language technology, applied AI, and agentic systems.
 
-## Stack
+## Portfolio experience
 
-- Next.js 15 with App Router
-- React 19 and TypeScript
-- Tailwind CSS 4
-- Motion for React
-- Lucide icons
-- Static export for AWS Amplify Hosting
+- About, education, and technical superpowers
+- Interactive Balochi AI Research Lab with keyboard-accessible project selection
+- Selected projects with direct links to their source repositories
+- Responsive navigation and mobile-first layouts
+- Contact and professional profile links
+- Lightweight static frontend with no runtime API key requirement
 
-## Run locally
+## Technology
 
-```bash
-npm install
-npm run dev
-```
+- HTML, CSS, and vanilla JavaScript
+- AWS Amplify Hosting for the challenge deployment
+- GitHub for source control and version history
 
-Open http://localhost:3000.
+## Local preview
 
-## Validate
+Open public/index.html in a browser, or run `python -m http.server 8000` from the repository root and visit http://localhost:8000/public/.
 
-```bash
-npm run typecheck
-npm run build
-```
+## AWS Amplify Hosting
 
-The production build exports static files to `out/`, suitable for AWS Amplify Hosting.
+Connect this GitHub repository to AWS Amplify Hosting. The included amplify.yml publishes the public/ directory as the static site artifact.
 
-## Deployment
-
-Connect this repository to AWS Amplify Hosting. For this static export, use:
-
-- Build command: `npm run build`
-- Output directory: `out`
-
-## Project principles
-
-- Keep project claims evidence-based.
-- Label research and experiments accurately.
-- Keep the interactive research explorer usable without external API keys.
-- Prioritize accessibility, responsive layouts, and performance.
+The Hatchable version is a prototype and preview. The AWS Amplify deployment is the intended challenge submission host.
 
 ## Owner
 
