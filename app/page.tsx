@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck } from "lucide-react";
 
@@ -21,10 +22,12 @@ const capabilities = [
 ];
 
 const research = [
-  { id: "BAL-01", name: "BalBERT", description: "Language representation research for Balochi text.", state: "Research project", icon: BrainCircuit },
-  { id: "BAL-02", name: "BalPOS", description: "Part-of-speech tagging with a transformer-based model.", state: "Model project", icon: Languages },
-  { id: "BAL-03", name: "BalNER", description: "Named entity recognition resources and experiments.", state: "Dataset & model work", icon: ScanText },
-  { id: "BAL-04", name: "BalTokenizer", description: "Tokenizer development for Balochi text processing.", state: "Open-source tool", icon: Terminal }
+  { id: "BAL-01", name: "BalBERT", description: "Domain-adaptive XLM-RoBERTa pretraining to strengthen the language representation foundation for Balochi NLP.", state: "97.8% perplexity reduction documented against the repository baseline", icon: BrainCircuit },
+  { id: "BAL-02", name: "BalPOS", description: "A transformer-based part-of-speech tagger for 16 Universal Dependencies tags, fine-tuned for Balochi.", state: "87.26% held-out accuracy documented for v2", icon: Languages },
+  { id: "BAL-03", name: "BalNER", description: "Named-entity recognition dataset and model experiments for identifying people, places, and other entities in Balochi text.", state: "0.7034 entity-level F1 documented on the test set", icon: ScanText },
+  { id: "BAL-04", name: "BalTokenizer", description: "A 48K Unigram tokenizer configuration designed for Balochi script and text processing.", state: "0.0% unknown-token rate and 99.9% character coverage documented", icon: Terminal },
+  { id: "BAL-05", name: "BalOCR", description: "Ongoing research into optical character recognition for Balochi script, with a focus on building a usable data and evaluation pipeline.", state: "Research in progress. No public model-quality claim", icon: ScanText },
+  { id: "BAL-06", name: "BalNLP", description: "An integrated Arabic-script Balochi NLP workspace combining a Python library, FastAPI service, and right-to-left interface.", state: "Four components locally integration-checked; not a model-quality claim", icon: Radio }
 ];
 
 export default function Home() {
@@ -57,11 +60,11 @@ export default function Home() {
         <div className="shell relative grid items-center gap-14 py-24 lg:grid-cols-[1.25fr_.75fr]">
           <div>
             <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6 }} className="eyebrow mb-8 flex items-center gap-3"><span className="h-px w-8 bg-[#f5c518]" /> Independent AI builder · Pakistan</motion.div>
-            <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .08 }} className="max-w-4xl text-[clamp(58px,9vw,112px)] font-semibold leading-[.88] tracking-[-.075em]">Building <span className="text-[#f5c518]">intelligent</span> systems.</motion.h1>
-            <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .16 }} className="mt-9 max-w-xl text-base leading-8 text-white/55 md:text-lg">I&apos;m Shah Bakhsh, an AI engineer exploring language technology, agentic systems, and practical machine learning. My work starts with real problems and aims to make technology useful to more people.</motion.p>
+            <motion.h1 initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .08 }} className="max-w-4xl text-[clamp(58px,9vw,112px)] font-semibold leading-[.88] tracking-[-.075em]">AI should speak<br /><span className="text-[#f5c518]">every language.</span></motion.h1>
+            <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7, delay: .16 }} className="mt-9 max-w-xl text-base leading-8 text-white/55 md:text-lg">I&apos;m Shah Bakhsh. I build intelligent systems across language models, machine learning, and agentic AI. One mission drives much of my work: helping bring Balochi into the future of technology.</motion.p>
             <div className="mt-10 flex flex-wrap items-center gap-4">
-              <a href="#lab" className="inline-flex items-center gap-3 rounded-full bg-[#f5c518] px-6 py-3.5 text-sm font-bold text-black transition hover:bg-white">Explore my research <ArrowUpRight size={16} /></a>
-              <a href="#projects" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-sm text-white/75 transition hover:border-white">View projects <ArrowDown size={15} /></a>
+              <Button asChild><a href="#lab">Explore my research <ArrowUpRight size={16} /></a></Button>
+              <Button asChild variant="outline"><a href="#projects">View projects <ArrowDown size={15} /></a></Button>
             </div>
             <p className="mt-8 text-[11px] tracking-wide text-white/35">A personal workspace for experiments, research, and things worth building.</p>
           </div>
@@ -87,10 +90,10 @@ export default function Home() {
         <div className="absolute bottom-0 left-1/2 h-12 w-px bg-gradient-to-b from-[#f5c518]/60 to-transparent" />
       </section>
 
-      <section id="about" className="section-pad border-b border-white/10">
+      <section aria-label="The mission" className="relative overflow-hidden border-b border-white/10 bg-[#f1eee3] py-24 text-[#11110d] md:py-32"><div className="shell relative"><p className="text-[10px] font-semibold tracking-[.24em] text-[#8a7018]">A BELIEF THAT BECAME A BODY OF WORK</p><h2 className="mt-12 max-w-5xl text-5xl font-semibold leading-[.98] tracking-[-.07em] md:text-7xl lg:text-[88px]">Some languages are missing from the future.<br /><span className="text-[#9a7710]">I want to help change that.</span></h2><div className="mt-14 flex flex-col justify-between gap-8 border-t border-black/20 pt-6 md:flex-row md:items-end"><p className="max-w-xl text-base leading-8 text-black/65 md:text-lg">A language should not need millions of speakers to deserve a place in technology. It deserves tools, data, models, and the chance to be understood.</p><span className="text-[9px] tracking-[.2em] text-[#8a7018]">THE MISSION / BALOCHI AI</span></div></div></section>\n\n      <section id="about" className="section-pad border-b border-white/10">
         <div className="shell grid gap-12 md:grid-cols-[.7fr_1.3fr]">
           <div><p className="eyebrow mb-5">01 / The person behind the systems</p><h2 className="section-title">Curiosity,<br /><span className="gold">made useful.</span></h2></div>
-          <div className="max-w-2xl pt-2"><p className="text-xl leading-9 text-white/80">I&apos;m a Computer Science undergraduate at the University of Turbat, Pakistan, focused on building AI systems that solve meaningful problems.</p><p className="mt-6 leading-8 text-white/50">A major part of my work is centered on Balochi, a low-resource language that deserves better digital tools. I explore the full path from data preparation and tokenization to model training, evaluation, and usable NLP applications.</p><p className="mt-6 leading-8 text-white/50">I also build with LLMs, retrieval systems, and AI agents, always looking for ways to turn research ideas into working tools.</p><div className="mt-9 flex flex-wrap gap-3"><span className="rounded-full border border-white/10 px-4 py-2 text-xs text-white/55">BS Computer Science</span><span className="rounded-full border border-white/10 px-4 py-2 text-xs text-white/55">University of Turbat</span><span className="rounded-full border border-white/10 px-4 py-2 text-xs text-white/55">Class of 2027</span></div></div>
+          <div className="max-w-2xl pt-2"><p className="text-xl leading-9 text-white/80">I&apos;m an AI engineer focused on language technology, applied machine learning, and intelligent systems that solve meaningful problems.</p><p className="mt-6 leading-8 text-white/50">A major part of my work is centered on Balochi, a low-resource language that deserves better digital tools. I work across data preparation, tokenization, model training, evaluation, and usable NLP applications. The goal is not simply to train models. It is to help build the foundations that let a language participate in the digital world.</p><p className="mt-6 leading-8 text-white/50">I also build with LLMs, retrieval systems, and AI agents, looking for ways to turn research into dependable tools. I care about clear evidence, open-source work, and engineering that makes a difference beyond a demo.</p><div className="mt-9 flex flex-wrap gap-3"><span className="rounded-full border border-white/10 px-4 py-2 text-xs text-white/55">AI & LLM Engineering</span><span className="rounded-full border border-white/10 px-4 py-2 text-xs text-white/55">Low-resource NLP</span><span className="rounded-full border border-white/10 px-4 py-2 text-xs text-white/55">Agentic systems</span></div></div>
         </div>
       </section>
 
