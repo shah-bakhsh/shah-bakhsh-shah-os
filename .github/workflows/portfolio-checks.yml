@@ -1,4 +1,4 @@
-name: Portfolio checks
+name: SHAH.OS quality checks
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  validate-static-site:
+  nextjs-quality:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,7 +16,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Validate JavaScript syntax
-        run: node --check public/app.js
-      - name: Validate required portfolio files
-        run: test -s public/index.html && test -s public/styles.css && test -s public/app.js && test -s amplify.yml
+      - name: Install dependencies
+        run: npm install
+      - name: TypeScript check
+        run: npm run typecheck
+      - name: ESLint
+        run: npm run lint
+      - name: Build static Next.js export
+        run: npm run build
