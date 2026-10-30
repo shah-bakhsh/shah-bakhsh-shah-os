@@ -46,6 +46,14 @@ export default function Home() {
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const terminalInputRef = useRef<HTMLInputElement>(null);
+  const terminalOutputRef = useRef<HTMLDivElement>(null);
+  const previousFocusRef = useRef<HTMLElement | null>(null);
+
+  const openTerminal = () => {
+    previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    setTerminalOpen(true);
+  };
+  const closeTerminal = () => setTerminalOpen(false);
 
   const commandResponses: Record<string, string> = {
     help: ["AVAILABLE COMMANDS","about       Reveal my background and mission","skills      Explore my technical toolkit","projects    Browse selected AI projects","research    Inspect my NLP research areas","balochi-ai  Explore my work on Balochi language technology","contact     Find ways to connect","clear       Clear the terminal","help        Show this command list","", "Tip: Use ↑ and ↓ to revisit previous commands."].join("\n"),
@@ -62,13 +70,14 @@ export default function Home() {
     if (!command) return;
     if (command === "clear") {
       setTerminalLines([]);
+      setCommandHistory((current) => [...current, rawCommand.trim()].slice(-50));
       setTerminalInput("");
       setHistoryIndex(-1);
       return;
     }
     const response = commandResponses[command];
     setTerminalLines((current) => [...current, { kind: "command", text: rawCommand.trim() }, { kind: "output", text: response ?? `Command not found: "${command}"\nType "help" to see the available commands. Try "projects", "research", or "contact".` }]);
-    setCommandHistory((current) => [...current, rawCommand.trim()]);
+    setCommandHistory((current) => [...current, rawCommand.trim()].slice(-50));
     setHistoryIndex(-1);
     setTerminalInput("");
   };
@@ -102,7 +111,39 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
   }, []);
 
-  useEffect(() => { if (terminalOpen) terminalInputRef.current?.focus(); }, [terminalOpen]);
+  useEffect(() => {
+    if (!terminalOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    terminalInputRef.current?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      previousFocusRef.current?.focus();
+    };
+  }, [terminalOpen]);
+
+  useEffect(() => {
+    if (terminalOpen && terminalOutputRef.current) {
+      terminalOutputRef.current.scrollTo({ top: terminalOutputRef.current.scrollHeight, behavior: "smooth" });
+    }
+  }, [terminalLines, terminalOpen]);
+
+  const handleTerminalDialogKeyDown = (event: ReactKeyboardEvent<HTMLElement>) => {
+    if (event.key !== "Tab") return;
+    const focusable = event.currentTarget.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), input:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  };
 
   const nav = [{ label: "About", href: "#about" }, { label: "Superpowers", href: "#superpowers" }, { label: "Research Lab", href: "#lab" }, { label: "Projects", href: "#projects" }];
 
@@ -117,7 +158,7 @@ export default function Home() {
           <nav className="hidden items-center gap-8 md:flex">
             {nav.map(item => <a key={item.label} href={item.href} className="text-xs text-white/60 transition hover:text-[#f5c518]">{item.label}</a>)}
           </nav>
-          <div className="hidden items-center gap-3 sm:flex"><button onClick={() => setTerminalOpen(true)} className="inline-flex items-center gap-2 rounded-full border border-[#f5c518]/35 px-4 py-2 text-xs text-[#f5c518] transition hover:bg-[#f5c518] hover:text-black"><Terminal size={14} /> Open terminal <span className="text-[9px] opacity-60">/</span></button><a href="mailto:shahbakhshtech@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518]">Let&apos;s connect <ArrowUpRight size={14} /></a></div>
+          <div className="hidden items-center gap-3 sm:flex"><button onClick={openTerminal} className="inline-flex items-center gap-2 rounded-full border border-[#f5c518]/35 px-4 py-2 text-xs text-[#f5c518] transition hover:bg-[#f5c518] hover:text-black"><Terminal size={14} /> Open terminal <span className="text-[9px] opacity-60">/</span></button><a href="mailto:shahbakhshtech@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518]">Let&apos;s connect <ArrowUpRight size={14} /></a></div>
           <button className="md:hidden" aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
         </div>
         {menuOpen && <nav className="shell flex flex-col gap-4 pb-6 md:hidden">{nav.map(item => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="text-sm text-white/70">{item.label}</a>)}</nav>}
@@ -201,13 +242,13 @@ export default function Home() {
 
       {terminalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-3 backdrop-blur-md sm:p-6" onMouseDown={(event) => { if (event.target === event.currentTarget) setTerminalOpen(false); }}>
-          <motion.section role="dialog" aria-modal="true" aria-labelledby="terminal-title" initial={{ opacity: 0, y: 18, scale: .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} className="flex max-h-[min(82vh,720px)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[#f5c518]/25 bg-[#090a0b] shadow-[0_30px_120px_rgba(0,0,0,.65)]">
+          <motion.section role="dialog" aria-modal="true" aria-labelledby="terminal-title" initial={{ opacity: 0, y: 18, scale: .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} onKeyDown={handleTerminalDialogKeyDown} className="flex max-h-[min(82vh,720px)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[#f5c518]/25 bg-[#090a0b] shadow-[0_30px_120px_rgba(0,0,0,.65)]">
             <div className="flex items-center justify-between border-b border-white/10 bg-white/[.035] px-4 py-3 sm:px-5">
               <div className="flex items-center gap-3"><div className="flex gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[#ff625a]" /><span className="h-2.5 w-2.5 rounded-full bg-[#f5c518]" /><span className="h-2.5 w-2.5 rounded-full bg-[#35c978]" /></div><div><p id="terminal-title" className="text-xs font-semibold tracking-wide text-white/85">SHAH.OS TERMINAL</p><p className="mt-0.5 text-[9px] tracking-[.16em] text-white/35">INTERACTIVE PORTFOLIO SHELL</p></div></div>
               <button onClick={() => setTerminalOpen(false)} aria-label="Close terminal" className="grid h-9 w-9 place-items-center rounded-lg text-white/50 transition hover:bg-white/10 hover:text-white"><X size={18} /></button>
             </div>
             <div className="flex flex-wrap gap-2 border-b border-white/10 px-4 py-3 sm:px-5">{["help","about","skills","projects","research","balochi-ai","contact"].map((command) => <button key={command} onClick={() => runCommand(command)} className="rounded-full border border-white/10 px-3 py-1.5 text-[10px] text-white/55 transition hover:border-[#f5c518]/50 hover:text-[#f5c518]">{command}</button>)}</div>
-            <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 font-mono text-[11px] leading-6 sm:px-5 sm:text-xs" aria-live="polite">
+            <div ref={terminalOutputRef} className="min-h-0 flex-1 overflow-y-auto px-4 py-4 font-mono text-[11px] leading-6 sm:px-5 sm:text-xs" aria-live="polite" aria-relevant="additions text">
               <div className="mb-4 text-white/45">Welcome. This terminal runs locally in your browser. Type <span className="text-[#f5c518]">help</span> to begin.</div>
               {terminalLines.map((line,index) => <div key={index} className={line.kind === "command" ? "mt-3 text-[#f5c518]" : "whitespace-pre-wrap break-words text-white/70"}>{line.kind === "command" ? <><span className="mr-2 text-[#35c978]">visitor@shah-os:~$</span>{line.text}</> : line.text}</div>)}
             </div>
