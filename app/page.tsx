@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
-import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Sparkles, Terminal, Radio, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck } from "lucide-react";
 
 const projects = [
   { code: "01", name: "BalBERT", type: "Language model", description: "Domain-adaptive language representation work focused on strengthening NLP foundations for Balochi.", tags: ["Transformers", "XLM-R", "NLP"], href: "https://github.com/shah-bakhsh/BalBERT" },
@@ -79,9 +79,9 @@ export default function Home() {
                   <span className="absolute -bottom-3 right-8 rounded-full border border-white/10 bg-[#101113] px-3 py-1.5 text-[9px] text-white/60">RESEARCH</span>
                 </div>
               </div>
-              <div className="absolute bottom-6 left-7 right-7 flex justify-between border-t border-white/10 pt-4 text-[9px] tracking-[.15em] text-white/35"><span>AI ENGINEERING</span><span>EST. 2024</span></div>
+              <div className="absolute bottom-6 left-7 right-7 flex justify-between border-t border-white/10 pt-4 text-[9px] tracking-[.15em] text-white/35"><span>AI ENGINEERING</span><span>AI / NLP / SYSTEMS</span></div>
             </div>
-            <div className="mt-4 flex items-center justify-between px-1 text-[10px] tracking-[.18em] text-white/30"><span>BUILDING FROM THE EDGE</span><span>27°41&apos;N · 65°59&apos;E</span></div>
+            <div className="mt-4 flex items-center justify-between px-1 text-[10px] tracking-[.18em] text-white/30"><span>BUILDING FROM THE EDGE</span><span>BASED IN PAKISTAN</span></div>
           </motion.div>
         </div>
         <div className="absolute bottom-0 left-1/2 h-12 w-px bg-gradient-to-b from-[#f5c518]/60 to-transparent" />
@@ -97,7 +97,7 @@ export default function Home() {
       <section id="superpowers" className="section-pad border-b border-white/10">
         <div className="shell"><div className="mb-14 flex flex-wrap items-end justify-between gap-6"><div><p className="eyebrow mb-5">02 / Technical range</p><h2 className="section-title">My tech <span className="gold">superpowers.</span></h2></div><p className="max-w-sm text-sm leading-7 text-white/45">A practical toolkit for taking ideas from datasets and experiments to usable AI-powered products.</p></div>
           <div className="grid gap-3 sm:grid-cols-2">{capabilities.map((item, i) => <div key={item.title} className="panel group p-7 transition hover:border-[#f5c518]/40"><div className="mb-12 flex items-center justify-between"><item.icon className="text-[#f5c518]" size={25} /><span className="text-xs text-white/25">0{i + 1}</span></div><h3 className="text-xl font-semibold">{item.title}</h3><p className="mt-3 max-w-sm text-sm leading-7 text-white/45">{item.detail}</p></div>)}</div>
-          <div className="mt-5 flex flex-wrap gap-2">{["Python","PyTorch","TensorFlow","Hugging Face","Transformers","LangGraph","LangChain","RAG","FAISS","Chroma","FastAPI","OpenCV","Docker","Git","AWS"].map(skill => <span key={skill} className="rounded-md bg-white/[.045] px-3 py-2 text-[11px] text-white/50">{skill}</span>)}</div>
+          <div className="mt-5 flex flex-wrap gap-2">{["Python","PyTorch","TensorFlow","Hugging Face","Transformers","LangGraph","LangChain","RAG","FAISS","Chroma","FastAPI","OpenCV","Docker","Git"].map(skill => <span key={skill} className="rounded-md bg-white/[.045] px-3 py-2 text-[11px] text-white/50">{skill}</span>)}</div>
         </div>
       </section>
 
