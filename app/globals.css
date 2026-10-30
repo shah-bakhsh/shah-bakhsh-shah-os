@@ -112,3 +112,159 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* SHAH.OS / SIGNATURE MOTION LAYER */
+:root {
+  --gold-soft: rgba(245,197,24,.16);
+  --motion-ease: cubic-bezier(.22,1,.36,1);
+}
+html { scroll-behavior: smooth; }
+body { isolation: isolate; }
+body::after {
+  content: "";
+  position: fixed;
+  inset: -30%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 18% 24%, rgba(245,197,24,.075), transparent 26%),
+    radial-gradient(ellipse at 78% 58%, rgba(184,146,35,.055), transparent 30%),
+    radial-gradient(ellipse at 50% 100%, rgba(255,255,255,.025), transparent 32%);
+  filter: blur(24px);
+  animation: atmosphere-drift 26s ease-in-out infinite alternate;
+}
+@keyframes atmosphere-drift {
+  0% { transform: translate3d(-1.5%, -1%, 0) scale(1); }
+  50% { transform: translate3d(1.5%, 1%, 0) scale(1.035); }
+  100% { transform: translate3d(-.5%, 2%, 0) scale(1.015); }
+}
+@keyframes grid-breathe {
+  0%,100% { opacity: .42; }
+  50% { opacity: .78; }
+}
+@keyframes gold-sweep {
+  0% { background-position: -180% 0; }
+  100% { background-position: 180% 0; }
+}
+@keyframes terminal-caret {
+  0%,48% { opacity: 1; }
+  49%,100% { opacity: .18; }
+}
+@keyframes soft-float {
+  0%,100% { transform: translate3d(0,0,0); }
+  50% { transform: translate3d(0,-9px,0); }
+}
+.grid-bg { animation: grid-breathe 9s ease-in-out infinite; }
+header nav a { position: relative; }
+header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -9px;
+  height: 1px;
+  background: var(--gold);
+  transition: right .38s var(--motion-ease);
+}
+header nav a:hover::after, header nav a:focus-visible::after { right: 0; }
+.panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform .55s var(--motion-ease),
+    border-color .4s ease,
+    box-shadow .55s var(--motion-ease),
+    background .4s ease;
+}
+.panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(112deg, transparent 20%, rgba(245,197,24,.075) 48%, transparent 72%);
+  background-size: 220% 100%;
+  transition: opacity .35s ease;
+}
+@media (hover:hover) and (pointer:fine) {
+  .panel:hover::before { opacity: 1; animation: gold-sweep 1.3s ease both; }
+  #projects .panel:hover {
+    transform: translateY(-8px) scale(1.008);
+    border-color: rgba(245,197,24,.42);
+    box-shadow: 0 30px 90px rgba(0,0,0,.42), 0 0 42px rgba(245,197,24,.075);
+  }
+  #superpowers .panel:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 26px 70px rgba(0,0,0,.32), 0 0 34px rgba(245,197,24,.06);
+  }
+}
+#projects .panel::after {
+  content: "";
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  bottom: 0;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  transition: transform .55s var(--motion-ease);
+}
+#projects .panel:hover::after, #projects .panel:focus-visible::after { transform: scaleX(1); }
+button, a { transition-timing-function: var(--motion-ease); }
+button:active, a:active { transform: scale(.985); }
+#lab button { position: relative; overflow: hidden; }
+#lab button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 25%, rgba(255,255,255,.12) 50%, transparent 75%);
+  transform: translateX(-120%);
+  transition: transform .65s var(--motion-ease);
+}
+#lab button:hover::after { transform: translateX(120%); }
+#main-content > section:first-of-type .panel {
+  box-shadow: 0 34px 110px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.06);
+}
+#main-content > section:first-of-type .panel > div:first-child {
+  text-shadow: 0 0 24px rgba(245,197,24,.12);
+}
+#main-content > section:first-of-type .panel .rounded-full {
+  will-change: transform;
+}
+#main-content > section:first-of-type .panel img {
+  filter: saturate(.9) contrast(1.04);
+  transition: filter .5s ease, transform .8s var(--motion-ease);
+}
+#main-content > section:first-of-type .panel:hover img {
+  filter: saturate(1.08) contrast(1.06);
+  transform: scale(1.045);
+}
+#main-content > section:nth-of-type(2) {
+  position: relative;
+}
+#main-content > section:nth-of-type(2)::after {
+  content: "LANGUAGE IS HUMAN INFRASTRUCTURE";
+  position: absolute;
+  right: max(28px, calc((100vw - 1200px)/2));
+  bottom: 22px;
+  color: rgba(17,17,13,.28);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .2em;
+}
+input::placeholder { transition: opacity .25s ease; }
+input:focus::placeholder { opacity: .45; }
+:target { scroll-margin-top: 112px; }
+@media (max-width: 640px) {
+  body::after { animation-duration: 38s; opacity: .7; }
+  #main-content > section:nth-of-type(2)::after { display: none; }
+  #projects .panel::after { left: 20px; right: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::after, .grid-bg { animation: none !important; }
+  .panel, .panel::before, #projects .panel::after, header nav a::after { transition: none !important; }
+}
