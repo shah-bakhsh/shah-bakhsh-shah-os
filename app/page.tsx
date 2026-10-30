@@ -191,7 +191,7 @@ export default function Home() {
               <Button asChild><a href="#lab">Explore my research <ArrowUpRight size={16} /></a></Button>
               <Button asChild variant="outline"><a href="#projects">View projects <ArrowDown size={15} /></a></Button>
             </div>
-            <p className="mt-8 text-[11px] tracking-wide text-white/35">A personal workspace for experiments, research, and things worth building.</p><button onClick={() => setTerminalOpen(true)} className="mt-5 inline-flex min-h-11 items-center gap-3 rounded-full border border-[#f5c518]/25 bg-[#f5c518]/[.06] px-4 py-2.5 text-left text-xs text-white/65 transition hover:border-[#f5c518]/60 hover:text-[#f5c518]"><Terminal size={15} className="text-[#f5c518]" /><span>Explore SHAH.OS interactively</span><kbd className="rounded border border-white/15 px-1.5 py-0.5 text-[10px] text-white/40">/</kbd></button>
+            <p className="mt-8 text-[11px] tracking-wide text-white/35">A personal workspace for experiments, research, and things worth building.</p><button onClick={openTerminal} className="mt-5 inline-flex min-h-11 items-center gap-3 rounded-full border border-[#f5c518]/25 bg-[#f5c518]/[.06] px-4 py-2.5 text-left text-xs text-white/65 transition hover:border-[#f5c518]/60 hover:text-[#f5c518]"><Terminal size={15} className="text-[#f5c518]" /><span>Explore SHAH.OS interactively</span><kbd className="rounded border border-white/15 px-1.5 py-0.5 text-[10px] text-white/40">/</kbd></button>
           </div>
           <motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .8, delay: .2 }} className="relative mx-auto w-full max-w-[390px]">
             <div className="absolute inset-8 rounded-full bg-[#f5c518]/10 blur-3xl" />
