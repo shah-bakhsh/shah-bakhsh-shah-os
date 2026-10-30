@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
-import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck, CornerDownLeft, Sparkles } from "lucide-react";
+import { motion, MotionConfig } from "motion/react";
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck, CornerDownLeft } from "lucide-react";
 
 const projects = [
   { code: "01", name: "BalBERT", type: "Language model", description: "Domain-adaptive language representation work focused on strengthening NLP foundations for Balochi.", tags: ["Transformers", "XLM-R", "NLP"], href: "https://github.com/shah-bakhsh/BalBERT" },
@@ -163,7 +163,7 @@ export default function Home() {
   const nav = [{ label: "About", href: "#about" }, { label: "Superpowers", href: "#superpowers" }, { label: "Research Lab", href: "#lab" }, { label: "Projects", href: "#projects" }];
 
   return (
-    <main className="overflow-hidden"><motion.div aria-hidden="true" className="fixed left-0 right-0 top-0 z-[70] h-[2px] origin-left bg-[#f5c518] shadow-[0_0_14px_rgba(245,197,24,.75)]" style={{ scaleX: scrollProgress }} />
+    <MotionConfig reducedMotion="user"><main className="overflow-hidden"><motion.div aria-hidden="true" className="fixed left-0 right-0 top-0 z-[70] h-[2px] origin-left bg-[#f5c518] shadow-[0_0_14px_rgba(245,197,24,.75)]" style={{ scaleX: scrollProgress }} />
       <motion.header initial={{ y: -24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.65, ease: "easeOut" }} className="sticky top-0 z-50 border-b border-white/[.08] bg-[#08090a]/80 backdrop-blur-2xl">
         <div className="shell flex h-[76px] items-center justify-between">
           <a href="#" className="flex items-center gap-3" aria-label="SHAH.OS home">
@@ -275,6 +275,6 @@ export default function Home() {
           </motion.section>
         </div>
       )}
-    </main>
+    </main></MotionConfig>
   );
 }
