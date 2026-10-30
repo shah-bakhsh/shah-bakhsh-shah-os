@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
-import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck, CornerDownLeft } from "lucide-react";
 
 const projects = [
   { code: "01", name: "BalBERT", type: "Language model", description: "Domain-adaptive language representation work focused on strengthening NLP foundations for Balochi.", tags: ["Transformers", "XLM-R", "NLP"], href: "https://github.com/shah-bakhsh/BalBERT" },
@@ -37,6 +37,72 @@ export default function Home() {
   const [labOpen, setLabOpen] = useState(false);
   const [activeResearch, setActiveResearch] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [terminalOpen, setTerminalOpen] = useState(false);
+  const [terminalInput, setTerminalInput] = useState("");
+  const [terminalLines, setTerminalLines] = useState<Array<{ kind: "command" | "output"; text: string }>>([
+    { kind: "output", text: "SHAH.OS interactive shell [version 1.0]" },
+    { kind: "output", text: 'Type "help" to see available commands. Try "balochi-ai" to explore my language work.' }
+  ]);
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const terminalInputRef = useRef<HTMLInputElement>(null);
+
+  const commandResponses: Record<string, string> = {
+    help: ["AVAILABLE COMMANDS","about       Reveal my background and mission","skills      Explore my technical toolkit","projects    Browse selected AI projects","research    Inspect my NLP research areas","balochi-ai  Explore my work on Balochi language technology","contact     Find ways to connect","clear       Clear the terminal","help        Show this command list","", "Tip: Use ↑ and ↓ to revisit previous commands."].join("\n"),
+    about: ["SHAH BAKHSH / AI ENGINEER","I build intelligent systems across language models, machine learning, and agentic AI.","A major part of my work focuses on bringing Balochi, a low-resource language, into the digital world.","My workflow spans data preparation, tokenization, model training, evaluation, and usable NLP applications.","MISSION: AI should speak every language."].join("\n"),
+    skills: ["TECHNICAL SUPERPOWERS","AI & ML       Python, PyTorch, TensorFlow, scikit-learn","LLMs          Hugging Face, Transformers, model adaptation","AGENTS        LangGraph, LangChain, tool use, orchestration","RAG           FAISS, Chroma, retrieval and evaluation","NLP           Tokenization, sequence labelling, low-resource NLP","ENGINEERING   FastAPI, Docker, Git, TypeScript","VISION        OpenCV, document processing, OCR experiments"].join("\n"),
+    projects: ["SELECTED PROJECTS","01  BalBERT       github.com/shah-bakhsh/BalBERT","02  BalTokenizer  github.com/shah-bakhsh/BalTokenizer","03  BalPOS        github.com/shah-bakhsh/BalPOS","04  BalNER        github.com/shah-bakhsh/BalNER","05  BalNLP        github.com/shah-bakhsh/BalNLP","06  CrisisPilot   github.com/shah-bakhsh/CrisisPilot-AI","07  PathPilot     github.com/shah-bakhsh/pathpilot-ai","08  ReelForge     github.com/shah-bakhsh/reelforge","","Open the Projects section for descriptions and repository links."].join("\n"),
+    research: ["RESEARCH INDEX / BALOCHI NLP","BalBERT      Domain-adaptive language representation","BalPOS       Part-of-speech tagging for 16 UD tags","BalNER       Named-entity recognition experiments","BalTokenizer 48K Unigram tokenizer configuration","BalOCR       OCR data and evaluation pipeline in progress","BalNLP       Python library, API, and RTL interface","","Use 'balochi-ai' for the mission and research context."].join("\n"),
+    "balochi-ai": ["BALOCHI AI / THE MISSION","A language should not need millions of speakers to deserve a place in technology.","I work on the foundations: text data, tokenization, language models, POS tagging, NER, and OCR.","The goal is to help build tools that let Balochi participate in the digital world.","","RESEARCH NODES: BalBERT · BalPOS · BalNER · BalTokenizer · BalOCR · BalNLP","Explore the Balochi AI Lab section on this page for interactive research briefings."].join("\n"),
+    contact: ["LET'S CONNECT","Email     shahbakhshtech@gmail.com","GitHub    github.com/shah-bakhsh","LinkedIn  linkedin.com/in/shah-bakhsh","","Open the links in the page footer or use the email button to start a conversation."].join("\n")
+  };
+
+  const runCommand = (rawCommand: string) => {
+    const command = rawCommand.trim().toLowerCase();
+    if (!command) return;
+    if (command === "clear") {
+      setTerminalLines([]);
+      setTerminalInput("");
+      setHistoryIndex(-1);
+      return;
+    }
+    const response = commandResponses[command];
+    setTerminalLines((current) => [...current, { kind: "command", text: rawCommand.trim() }, { kind: "output", text: response ?? `Command not found: "${command}"\nType "help" to see the available commands. Try "projects", "research", or "contact".` }]);
+    setCommandHistory((current) => [...current, rawCommand.trim()]);
+    setHistoryIndex(-1);
+    setTerminalInput("");
+  };
+
+  const handleTerminalKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") { event.preventDefault(); runCommand(terminalInput); }
+    else if (event.key === "ArrowUp") {
+      event.preventDefault();
+      if (commandHistory.length) {
+        const nextIndex = historyIndex < 0 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
+        setHistoryIndex(nextIndex); setTerminalInput(commandHistory[nextIndex]);
+      }
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      if (historyIndex >= 0) {
+        const nextIndex = historyIndex + 1;
+        setHistoryIndex(nextIndex >= commandHistory.length ? -1 : nextIndex);
+        setTerminalInput(nextIndex >= commandHistory.length ? "" : commandHistory[nextIndex]);
+      }
+    } else if (event.key === "Escape") setTerminalOpen(false);
+  };
+
+  useEffect(() => {
+    const handleGlobalKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      const isTyping = target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
+      if (event.key === "/" && !isTyping) { event.preventDefault(); setTerminalOpen(true); }
+      if (event.key === "Escape") setTerminalOpen(false);
+    };
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, []);
+
+  useEffect(() => { if (terminalOpen) terminalInputRef.current?.focus(); }, [terminalOpen]);
 
   const nav = [{ label: "About", href: "#about" }, { label: "Superpowers", href: "#superpowers" }, { label: "Research Lab", href: "#lab" }, { label: "Projects", href: "#projects" }];
 
@@ -51,7 +117,7 @@ export default function Home() {
           <nav className="hidden items-center gap-8 md:flex">
             {nav.map(item => <a key={item.label} href={item.href} className="text-xs text-white/60 transition hover:text-[#f5c518]">{item.label}</a>)}
           </nav>
-          <a href="mailto:shahbakhshtech@gmail.com" className="hidden items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518] sm:flex">Let&apos;s connect <ArrowUpRight size={14} /></a>
+          <div className="hidden items-center gap-3 sm:flex"><button onClick={() => setTerminalOpen(true)} className="inline-flex items-center gap-2 rounded-full border border-[#f5c518]/35 px-4 py-2 text-xs text-[#f5c518] transition hover:bg-[#f5c518] hover:text-black"><Terminal size={14} /> Open terminal <span className="text-[9px] opacity-60">/</span></button><a href="mailto:shahbakhshtech@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518]">Let&apos;s connect <ArrowUpRight size={14} /></a></div>
           <button className="md:hidden" aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
         </div>
         {menuOpen && <nav className="shell flex flex-col gap-4 pb-6 md:hidden">{nav.map(item => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="text-sm text-white/70">{item.label}</a>)}</nav>}
@@ -69,7 +135,7 @@ export default function Home() {
               <Button asChild><a href="#lab">Explore my research <ArrowUpRight size={16} /></a></Button>
               <Button asChild variant="outline"><a href="#projects">View projects <ArrowDown size={15} /></a></Button>
             </div>
-            <p className="mt-8 text-[11px] tracking-wide text-white/35">A personal workspace for experiments, research, and things worth building.</p>
+            <p className="mt-8 text-[11px] tracking-wide text-white/35">A personal workspace for experiments, research, and things worth building.</p><button onClick={() => setTerminalOpen(true)} className="mt-5 inline-flex min-h-11 items-center gap-3 rounded-full border border-[#f5c518]/25 bg-[#f5c518]/[.06] px-4 py-2.5 text-left text-xs text-white/65 transition hover:border-[#f5c518]/60 hover:text-[#f5c518]"><Terminal size={15} className="text-[#f5c518]" /><span>Curious? Open my command terminal</span><kbd className="rounded border border-white/15 px-1.5 py-0.5 text-[10px] text-white/40">/</kbd></button>
           </div>
           <motion.div initial={{ opacity: 0, scale: .94 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .8, delay: .2 }} className="relative mx-auto w-full max-w-[390px]">
             <div className="absolute inset-8 rounded-full bg-[#f5c518]/10 blur-3xl" />
@@ -132,6 +198,27 @@ export default function Home() {
       </section>
 
       <footer className="border-t border-white/10 py-8"><div className="shell flex flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left"><div><p className="text-sm font-bold tracking-[.16em]">SHAH<span className="text-[#f5c518]">.OS</span></p><p className="mt-2 text-[10px] text-white/30">Designed and built by Shah Bakhsh · Pakistan</p></div><div className="flex items-center gap-5 text-white/45"><a href="https://github.com/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[#f5c518]"><Github size={17} /></a><a href="https://linkedin.com/in/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[#f5c518]"><Linkedin size={17} /></a><a href="mailto:shahbakhshtech@gmail.com" aria-label="Email" className="transition hover:text-[#f5c518]"><ShieldCheck size={17} /></a></div><p className="text-[10px] text-white/25">© 2026 SHAH.OS · Built for the curious.</p></div></footer>
+
+      {terminalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-3 backdrop-blur-md sm:p-6" onMouseDown={(event) => { if (event.target === event.currentTarget) setTerminalOpen(false); }}>
+          <motion.section role="dialog" aria-modal="true" aria-labelledby="terminal-title" initial={{ opacity: 0, y: 18, scale: .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} className="flex max-h-[min(82vh,720px)] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[#f5c518]/25 bg-[#090a0b] shadow-[0_30px_120px_rgba(0,0,0,.65)]">
+            <div className="flex items-center justify-between border-b border-white/10 bg-white/[.035] px-4 py-3 sm:px-5">
+              <div className="flex items-center gap-3"><div className="flex gap-1.5"><span className="h-2.5 w-2.5 rounded-full bg-[#ff625a]" /><span className="h-2.5 w-2.5 rounded-full bg-[#f5c518]" /><span className="h-2.5 w-2.5 rounded-full bg-[#35c978]" /></div><div><p id="terminal-title" className="text-xs font-semibold tracking-wide text-white/85">SHAH.OS TERMINAL</p><p className="mt-0.5 text-[9px] tracking-[.16em] text-white/35">INTERACTIVE PORTFOLIO SHELL</p></div></div>
+              <button onClick={() => setTerminalOpen(false)} aria-label="Close terminal" className="grid h-9 w-9 place-items-center rounded-lg text-white/50 transition hover:bg-white/10 hover:text-white"><X size={18} /></button>
+            </div>
+            <div className="flex flex-wrap gap-2 border-b border-white/10 px-4 py-3 sm:px-5">{["help","about","skills","projects","research","balochi-ai","contact"].map((command) => <button key={command} onClick={() => runCommand(command)} className="rounded-full border border-white/10 px-3 py-1.5 text-[10px] text-white/55 transition hover:border-[#f5c518]/50 hover:text-[#f5c518]">{command}</button>)}</div>
+            <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 font-mono text-[11px] leading-6 sm:px-5 sm:text-xs" aria-live="polite">
+              <div className="mb-4 text-white/45">Welcome. This terminal runs locally in your browser. Type <span className="text-[#f5c518]">help</span> to begin.</div>
+              {terminalLines.map((line,index) => <div key={index} className={line.kind === "command" ? "mt-3 text-[#f5c518]" : "whitespace-pre-wrap break-words text-white/70"}>{line.kind === "command" ? <><span className="mr-2 text-[#35c978]">visitor@shah-os:~$</span>{line.text}</> : line.text}</div>)}
+            </div>
+            <form className="border-t border-white/10 bg-white/[.025] p-3 sm:px-5 sm:py-4" onSubmit={(event) => { event.preventDefault(); runCommand(terminalInput); }}>
+              <label htmlFor="terminal-command" className="mb-2 block text-[9px] tracking-[.18em] text-white/35">ENTER A COMMAND</label>
+              <div className="flex items-center gap-2"><span className="font-mono text-xs text-[#35c978]">❯</span><input ref={terminalInputRef} id="terminal-command" value={terminalInput} onChange={(event) => setTerminalInput(event.target.value)} onKeyDown={handleTerminalKeyDown} autoComplete="off" autoCapitalize="none" spellCheck={false} placeholder='Try "balochi-ai" or type "help"...' className="min-w-0 flex-1 bg-transparent py-2 font-mono text-xs text-white outline-none placeholder:text-white/25" /><button type="submit" aria-label="Run command" className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-[#f5c518] text-black transition hover:bg-white"><CornerDownLeft size={17} /></button></div>
+              <p className="mt-2 text-[9px] text-white/30">ENTER to run · ↑/↓ command history · ESC to close · click outside to dismiss</p>
+            </form>
+          </motion.section>
+        </div>
+      )}
     </main>
   );
 }
