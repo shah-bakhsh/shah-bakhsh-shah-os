@@ -20,7 +20,7 @@
     <a class="brand" href="#top" aria-label="SHAH.OS home"><span class="brand-mark">S<span>.</span></span><span>SHAH<span class="gold">.OS</span></span></a>
     <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
     <nav class="nav" id="mainNav" aria-label="Main navigation">
-      <a href="#about">About</a><a href="#capabilities">Capabilities</a><a href="#lab">Research lab</a><a href="#work">Selected work</a>
+      <a href="#about">About</a><a href="#capabilities">Capabilities</a><a href="#lab">Research lab</a><a href="#work">Selected work</a><a href="#contact">Contact</a>
     </nav>
     <a class="nav-cta" href="mailto:shahbakhshtech@gmail.com">Let’s talk <span>↗</span></a>
   </header>
@@ -31,7 +31,7 @@
       <div class="hero-copy">
         <div class="eyebrow"><i></i> AI ENGINEERING · LOW-RESOURCE NLP · AGENTIC SYSTEMS</div>
         <p class="hero-kicker">Independent builder / Pakistan</p>
-        <h1>Building<br>intelligent systems<span class="gold">.</span><br><span class="outline-text">Making them matter.</span></h1>
+        <h1>Building intelligent<br>systems<span class="gold">.</span><br><span class="outline-text">Advancing low-resource language AI.</span></h1>
         <p class="hero-lead">I’m Shah Bakhsh. I build with machine learning, language models, and AI agents, with a particular focus on bringing better digital tools to underrepresented languages.</p>
         <div class="hero-actions"><a class="button button-gold" href="#lab">Explore the research lab <span>↗</span></a><a class="text-link" href="#work">Browse selected work <span>↓</span></a></div>
         <div class="hero-meta"><span><b class="status-dot"></b> OPEN TO RESEARCH & COLLABORATION</span><span>BASED IN PAKISTAN</span></div>
@@ -48,7 +48,7 @@
       <div class="section-index">01 / THE PERSON BEHIND THE SYSTEMS</div>
       <div class="intro-content">
         <h2>Technology should<br>make <em>more possible.</em></h2>
-        <div class="intro-text"><p class="lead">I’m a Computer Science professional-in-training focused on AI engineering, language technology, and intelligent systems. My work brings together machine learning, LLMs, and practical software development.</p><p>A major part of my work is centered on Balochi, a low-resource language that deserves better digital tools. I work across the pipeline: preparing data, building tokenizers, adapting language models, training NLP systems, and exploring useful applications.</p><p>Beyond language technology, I experiment with agentic workflows, retrieval systems, and AI-powered products. I care about the engineering behind the demo: reproducibility, evaluation, and whether a tool solves a real problem.</p><div class="facts"><span>COMPUTER SCIENCE</span><span>AI ENGINEERING</span><span>LOW-RESOURCE NLP</span><span>AGENTIC SYSTEMS</span></div></div>
+        <div class="intro-text"><p class="lead">I’m an AI-focused Computer Science professional building across machine learning, LLM engineering, agentic systems, and language technology. I turn research ideas into practical tools, with a particular focus on making AI work better for underrepresented languages.</p><p>A major part of my work is centered on Balochi, a low-resource language that deserves better digital tools. I work across the pipeline: preparing data, building tokenizers, adapting language models, training NLP systems, and exploring useful applications.</p><p>Beyond language technology, I experiment with agentic workflows, retrieval systems, and AI-powered products. I care about the engineering behind the demo: reproducibility, evaluation, and whether a tool solves a real problem.</p><div class="facts"><span>COMPUTER SCIENCE</span><span>AI ENGINEERING</span><span>LOW-RESOURCE NLP</span><span>AGENTIC SYSTEMS</span></div></div>
       </div>
     </section>
 
@@ -64,28 +64,31 @@
     </section>
 
     <section class="lab section-wrap" id="lab">
-      <div class="section-heading lab-heading"><div><div class="section-index">03 / THE SIGNATURE PROJECT</div><h2>The Balochi AI<br><em>research lab.</em></h2></div><div class="lab-intro"><p>Low-resource language technology is not a side project. It is a mission to make sure more languages can participate in the AI era.</p><span class="hint">↓ INTERACT WITH THE RESEARCH NODES TO UNLOCK THE LAB</span></div></div>
+      <div class="section-heading lab-heading"><div><div class="section-index">03 / THE SIGNATURE EXPERIENCE</div><h2>Balochi AI<br><em>Research Mission Control.</em></h2></div><div class="lab-intro"><p>Building language technology for a language that deserves a place in the AI era. Explore the models, methods, and research directions behind the work.</p><span class="hint">↓ INTERACT WITH THE RESEARCH NODES TO EXPLORE THE LAB</span></div></div>
       <div class="lab-shell">
         <div class="lab-top"><div><span class="pulse"></span> SHAH.OS / RESEARCH MISSION CONTROL</div><span class="mono">BAL-NLP SYSTEMS · EXPLORER 1.0</span></div>
         <div class="lab-body">
           <div class="node-list" role="tablist" aria-label="Balochi AI research projects">
-            <button class="node active" role="tab" aria-selected="true" data-node="balbert"><span class="node-id">01</span><span><b>BalBERT</b><small>Language representation</small></span><span class="node-arrow">↗</span></button>
-            <button class="node" role="tab" aria-selected="false" data-node="balpos"><span class="node-id">02</span><span><b>BalPOS</b><small>Part-of-speech tagging</small></span><span class="node-arrow">↗</span></button>
-            <button class="node" role="tab" aria-selected="false" data-node="balner"><span class="node-id">03</span><span><b>BalNER</b><small>Named entity recognition</small></span><span class="node-arrow">↗</span></button>
-            <button class="node" role="tab" aria-selected="false" data-node="baltokenizer"><span class="node-id">04</span><span><b>BalTokenizer</b><small>Text processing</small></span><span class="node-arrow">↗</span></button>
-            <button class="node" role="tab" aria-selected="false" data-node="balnlp"><span class="node-id">05</span><span><b>BalNLP</b><small>Developer ecosystem</small></span><span class="node-arrow">↗</span></button>
+            <button class="node active" id="node-balbert" role="tab" aria-controls="nodeDetail" aria-selected="true" data-node="balbert"><span class="node-id">01</span><span><b>BalBERT</b><small>Language representation</small></span><span class="node-arrow">↗</span></button>
+            <button class="node" id="node-balpos" role="tab" aria-controls="nodeDetail" aria-selected="false" data-node="balpos"><span class="node-id">02</span><span><b>BalPOS</b><small>Part-of-speech tagging</small></span><span class="node-arrow">↗</span></button>
+            <button class="node" id="node-balner" role="tab" aria-controls="nodeDetail" aria-selected="false" data-node="balner"><span class="node-id">03</span><span><b>BalNER</b><small>Named entity recognition</small></span><span class="node-arrow">↗</span></button>
+            <button class="node" id="node-baltokenizer" role="tab" aria-controls="nodeDetail" aria-selected="false" data-node="baltokenizer"><span class="node-id">04</span><span><b>BalTokenizer</b><small>Text processing</small></span><span class="node-arrow">↗</span></button>
+            <button class="node" id="node-balocr" role="tab" aria-controls="nodeDetail" aria-selected="false" data-node="balocr"><span class="node-id">05</span><span><b>BalOCR</b><small>Balochi text recognition</small></span><span class="node-arrow">↗</span></button>
+            <button class="node" id="node-balnlp" role="tab" aria-controls="nodeDetail" aria-selected="false" data-node="balnlp"><span class="node-id">06</span><span><b>BalNLP</b><small>Language technology ecosystem</small></span><span class="node-arrow">↗</span></button>
           </div>
           <div class="node-detail" id="nodeDetail" role="tabpanel" aria-live="polite">
-            <div class="detail-top"><span class="mono" id="detailCode">RESEARCH NODE / 01</span><span class="detail-state">● ACTIVE EXPLORATION</span></div>
+            <div class="detail-top"><span class="mono" id="detailCode">RESEARCH NODE / 01</span><span class="detail-state" id="detailState">● RESEARCH</span></div>
             <div class="detail-symbol" id="detailSymbol">B</div>
             <h3 id="detailTitle">BalBERT</h3>
             <p id="detailDescription">Language representation research focused on building stronger foundations for Balochi NLP and downstream language understanding tasks.</p>
+            <div class="detail-method"><div><small>METHOD / APPROACH</small><p id="detailMethod">Domain-adaptive pretraining of a transformer encoder.</p></div><div><small>RESEARCH EVIDENCE</small><p id="detailEvidence">See the linked repository for documented experiments and evaluation.</p></div></div>
             <div class="detail-bottom"><div><small>FOCUS AREA</small><b id="detailFocus">Transformer language models</b></div><a id="detailLink" href="https://github.com/shah-bakhsh/BalBERT" target="_blank" rel="noopener">Explore repository ↗</a></div>
           </div>
         </div>
         <div class="lab-footer"><span>EXPERIMENTAL WORKSPACE / SELECT A NODE TO INSPECT</span><span>BUILT FOR ACCESSIBLE LANGUAGE TECHNOLOGY</span></div>
       </div>
-      <p class="lab-note">This explorer is a local interactive experience. It does not call an external AI API or require an account.</p>
+      <p class="lab-note">This explorer runs locally in your browser. No external AI API, account, or backend is required.</p>
+      <div class="lab-discovery"><button type="button" id="labStoryToggle" aria-expanded="false" aria-controls="labStory">A NOTE FROM THE BUILDER <span aria-hidden="true">＋</span></button><p id="labStory" hidden>My motivation is simple: Balochi deserves a place in the AI era. Every corpus, tokenizer, model, and evaluation step is part of building that foundation, so more people can use technology in the language that matters to them.</p></div>
     </section>
 
     <section class="work section-wrap" id="work">
@@ -98,16 +101,17 @@
         <a class="project-card" href="https://github.com/shah-bakhsh/CrisisPilot-AI" target="_blank" rel="noopener"><div class="project-top"><span>MULTI-AGENT SYSTEM / 005</span><span>↗</span></div><div class="project-art art-crisis"><div class="radar"><i></i><i></i><i></i></div><span>FROM WARNING TO ACTION</span></div><div class="project-info"><div><h3>CrisisPilot AI</h3><p>Disaster intelligence and emergency coordination concept built around AI workflows.</p></div><div class="project-tags">AI AGENTS <i>·</i> ORCHESTRATION</div></div></a>
         <a class="project-card" href="https://github.com/shah-bakhsh/pathpilot-ai" target="_blank" rel="noopener"><div class="project-top"><span>APPLIED AI PRODUCT / 006</span><span>↗</span></div><div class="project-art art-path"><div class="path-nodes"><i></i><i></i><i></i><i></i></div><span>CAREER NAVIGATION</span></div><div class="project-info"><div><h3>PathPilot AI</h3><p>AI-powered career navigation exploring personalized roadmaps and guidance workflows.</p></div><div class="project-tags">LLMs <i>·</i> PRODUCT ENGINEERING</div></div></a>
       </div>
-      <div class="more-work"><span>MORE EXPERIMENTS: ReelForge · BalNLP · Balochi OCR research</span><a href="https://github.com/shah-bakhsh" target="_blank" rel="noopener">VIEW ALL REPOSITORIES ↗</a></div>
+      <div class="research-evidence" aria-label="Selected documented research results"><div class="evidence-heading"><span>RESEARCH EVIDENCE</span><p>Selected figures reported in the linked project documentation.</p></div><a href="https://github.com/shah-bakhsh/BalBERT" target="_blank" rel="noopener"><strong>97.8%</strong><span>perplexity reduction<br>BalBERT</span><i>↗</i></a><a href="https://github.com/shah-bakhsh/BalPOS" target="_blank" rel="noopener"><strong>87.26%</strong><span>held-out accuracy<br>BalPOS v2</span><i>↗</i></a><a href="https://github.com/shah-bakhsh/BalTokenizer" target="_blank" rel="noopener"><strong>0.0%</strong><span>unknown-token rate<br>BalTokenizer</span><i>↗</i></a></div>
+      <div class="more-work"><span>MORE WORK: BalOCR research · BalNLP ecosystem · ReelForge</span><a href="https://github.com/shah-bakhsh" target="_blank" rel="noopener">VIEW ALL REPOSITORIES ↗</a></div>
     </section>
 
     <section class="principles section-wrap">
       <div class="section-index">05 / HOW I BUILD</div><div class="principles-grid"><h2>Less hype.<br><em>More evidence.</em></h2><div class="principle-list"><div><span>01</span><p><b>Start with the problem.</b> Understand the user, the data, and the constraints before choosing a model.</p></div><div><span>02</span><p><b>Measure what matters.</b> Treat evaluation, error analysis, and reproducibility as part of the work.</p></div><div><span>03</span><p><b>Build for access.</b> Make tools usable, explainable, and useful beyond the people who already have the best technology.</p></div></div></div>
     </section>
 
-    <section class="contact section-wrap" id="contact"><div class="contact-card"><div class="contact-orb"></div><div class="section-index">NEXT / BUILD SOMETHING MEANINGFUL</div><h2>Have a problem<br>worth <em>solving?</em></h2><p>I’m interested in AI research, open-source collaboration, and building technology with real-world value. Let’s talk.</p><a class="button button-gold" href="mailto:shahbakhshtech@gmail.com">Start a conversation <span>↗</span></a></div></section>
+    <section class="contact section-wrap" id="contact"><div class="contact-card"><div class="contact-orb"></div><div class="section-index">NEXT / BUILD SOMETHING MEANINGFUL</div><h2>Have a problem<br>worth <em>solving?</em></h2><p>I’m interested in AI research, open-source collaboration, and building technology with real-world value. Let’s talk.</p><a class="button button-gold" href="mailto:shahbakhshtech@gmail.com">Start a conversation <span>↗</span></a><div class="contact-links"><a href="https://github.com/shah-bakhsh" target="_blank" rel="noopener">GitHub ↗</a><a href="https://linkedin.com/in/shah-bakhsh" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://huggingface.co/shah-bakhsh" target="_blank" rel="noopener">Hugging Face ↗</a></div></div></section>
   </main>
 
-  <footer class="footer"><a class="brand" href="#top"><span class="brand-mark">S<span>.</span></span><span>SHAH<span class="gold">.OS</span></span></a><div class="footer-links"><a href="https://github.com/shah-bakhsh" target="_blank" rel="noopener">GITHUB ↗</a><a href="https://linkedin.com/in/shah-bakhsh" target="_blank" rel="noopener">LINKEDIN ↗</a><a href="mailto:shahbakhshtech@gmail.com">EMAIL ↗</a></div><span>© 2026 SHAH BAKHSH · BUILT WITH INTENT.</span></footer>
+  <footer class="footer"><a class="brand" href="#top"><span class="brand-mark">S<span>.</span></span><span>SHAH<span class="gold">.OS</span></span></a><div class="footer-links"><a href="https://github.com/shah-bakhsh" target="_blank" rel="noopener">GITHUB ↗</a><a href="https://linkedin.com/in/shah-bakhsh" target="_blank" rel="noopener">LINKEDIN ↗</a><a href="mailto:shahbakhshtech@gmail.com">EMAIL ↗</a><a href="https://huggingface.co/shah-bakhsh" target="_blank" rel="noopener">HUGGING FACE ↗</a></div><span>© 2026 SHAH BAKHSH · BUILT WITH INTENT.</span></footer>
 </body>
 </html>
