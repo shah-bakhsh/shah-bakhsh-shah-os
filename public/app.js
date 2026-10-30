@@ -51,13 +51,13 @@ const research = {
   },
   balnlp: {
     code: "RESEARCH NODE / 06", symbol: "L", title: "BalNLP",
-    description: "The wider Balochi language-technology direction connecting corpora, tokenization, language models, and downstream NLP tools into a coherent research ecosystem.",
-    method: "A connected roadmap: language data, text processing, pretrained representations, task-specific models, and reusable evaluation workflows.",
-    evidence: "Explore the individual public repositories for the components that are available. Roadmap ideas are not presented as released systems.",
-    focus: "Low-resource language technology ecosystem",
-    status: "ECOSYSTEM DIRECTION",
-    url: "https://github.com/shah-bakhsh",
-    linkLabel: "Browse research profile"
+    description: "An Arabic-script Balochi NLP workspace combining a Python library, FastAPI service, and RTL interface for exploring POS, NER, morphology, and dependency analysis.",
+    method: "A unified API and interface with Unicode-aware text handling, word-level outputs, CoNLL-U export, bounded inference, and strict model-checkpoint loading.",
+    evidence: "The repository records local verification for four model components. This is integration evidence, not a claim of model quality or adoption. Its documented checkpoint memory requirements also rule out a working free-tier inference claim on 512 MB RAM.",
+    focus: "Python library · FastAPI · RTL research workspace",
+    status: "VERSION 0.1.0 / ACTIVE DEVELOPMENT",
+    url: "https://github.com/shah-bakhsh/BalNLP",
+    linkLabel: "Explore repository"
   }
 };
 
