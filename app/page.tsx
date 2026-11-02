@@ -108,7 +108,7 @@ export default function Home() {
       const target = event.target as HTMLElement | null;
       const isTyping = target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
       if (event.key === "/" && !isTyping) { event.preventDefault(); openTerminal(); }
-      if (event.key === "Escape") closeTerminal();
+      if (event.key === "Escape") { closeTerminal(); setMenuOpen(false); }
     };
     window.addEventListener("keydown", handleGlobalKeyDown);
     return () => window.removeEventListener("keydown", handleGlobalKeyDown);
@@ -176,9 +176,9 @@ export default function Home() {
             {nav.map(item => <a key={item.label} href={item.href} className="text-xs text-white/60 transition hover:text-[#f5c518]">{item.label}</a>)}
           </nav>
           <div className="hidden items-center gap-3 md:flex"><button onClick={openTerminal} className="inline-flex items-center gap-2 rounded-full border border-[#f5c518]/35 px-4 py-2 text-xs text-[#f5c518] transition hover:bg-[#f5c518] hover:text-black"><Terminal size={14} /> Open terminal <span className="text-[9px] opacity-60">/</span></button><a href="mailto:shahbakhshtech@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518]">Let&apos;s connect <ArrowUpRight size={14} /></a></div>
-          <button className="grid size-11 place-items-center rounded-full border border-white/10 text-white/75 transition hover:border-[#f5c518]/50 hover:text-[#f5c518] md:hidden" aria-label="Toggle navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button>
+          <button className="grid size-11 place-items-center rounded-full border border-white/10 text-white/75 transition hover:border-[#f5c518]/50 hover:text-[#f5c518] md:hidden" aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"} aria-controls="mobile-navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button>
         </div>
-        {menuOpen && <motion.nav aria-label="Mobile navigation" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="shell flex flex-col gap-1 border-t border-white/[.06] pb-5 pt-3 md:hidden">{nav.map(item => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 text-sm text-white/70 transition hover:bg-white/[.04] hover:text-[#f5c518]">{item.label}</a>)}<button onClick={() => { setMenuOpen(false); openTerminal(); }} className="mt-2 flex min-h-11 items-center gap-2 rounded-xl bg-[#f5c518] px-4 text-left text-sm font-semibold text-black"><Terminal size={16} /> Open command terminal</button></motion.nav>}
+        {menuOpen && <motion.nav id="mobile-navigation" aria-label="Mobile navigation" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="shell flex flex-col gap-1 border-t border-white/[.06] pb-5 pt-3 md:hidden">{nav.map(item => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 text-sm text-white/70 transition hover:bg-white/[.04] hover:text-[#f5c518]">{item.label}</a>)}<button onClick={() => { setMenuOpen(false); openTerminal(); }} className="mt-2 flex min-h-11 items-center gap-2 rounded-xl bg-[#f5c518] px-4 text-left text-sm font-semibold text-black"><Terminal size={16} /> Open command terminal</button></motion.nav>}
       </motion.header>
 
       <motion.section initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.12 }} transition={{ duration: 0.72, ease: "easeOut" }} className="relative flex min-h-[690px] items-center border-b border-white/10">
