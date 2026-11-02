@@ -39,7 +39,7 @@ Results are linked to their project documentation. Consult each repository for e
 - Motion for React (section reveals, orbital animation, card transitions, terminal transitions, and reading progress)
 - Lucide icons
 - GitHub Actions for type, lint, and build checks
-- AWS Amplify Hosting configuration for static Next.js export
+- AWS Amplify Hosting configuration for Next.js static export
 
 ## Run locally
 
@@ -60,16 +60,16 @@ npm run lint
 npm run build
 ```
 
-The Next.js configuration exports a static site to `out/`, which is suitable for AWS Amplify Hosting static deployment.
+The project uses Next.js static export (`output: "export"`). Next.js generates the deployable static site in `out/`. For AWS Amplify with Next.js 14 or later and a repository-level `amplify.yml`, AWS documents `.next` as the build artifact directory; Amplify's Next.js hosting integration handles the static export output.
 
 ## AWS Amplify Hosting
 
-The repository's `amplify.yml` installs dependencies, runs the TypeScript check and Next.js production build, then publishes the `out/` directory.
+The repository's `amplify.yml` installs dependencies, runs the TypeScript check and Next.js production build, and uses `.next` as the Amplify artifact directory for Next.js 14+ static export.
 
 1. Open the [AWS Amplify console](https://console.aws.amazon.com/amplify/home).
 2. Choose **Deploy an app** and connect GitHub.
 3. Select `shah-bakhsh/shah-bakhsh-shah-os` and the `main` branch.
-4. Confirm the build configuration publishes `out/`.
+4. Keep the repository build specification. It uses `npm run build` and the `.next` artifact directory.
 5. Deploy and verify the generated public URL in a private browser window.
 
 **Deployment status:** The repository is configured for Amplify Hosting. An AWS Amplify app and public AWS deployment URL have not yet been verified, so no AWS deployment is claimed.
