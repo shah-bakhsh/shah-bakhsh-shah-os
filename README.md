@@ -10,7 +10,8 @@ SHAH.OS is the personal AI engineering portfolio of Shah Bakhsh. It brings toget
 - AI engineering capabilities across LLMs, low-resource NLP, agentic workflows, retrieval, and computer vision.
 - An interactive Balochi AI research explorer covering BalBERT, BalPOS, BalNER, BalTokenizer, BalOCR, and BalNLP.
 - An interactive command terminal with `help`, `about`, `skills`, `projects`, `research`, `balochi-ai`, `contact`, and `clear` commands. Visitors can open it from the visible page hint, the header control, or the `/` keyboard shortcut; command chips, Enter, arrow-key history, helpful unknown-command feedback, Escape, and outside-click dismissal are supported. The dialog traps keyboard focus, restores focus on close, locks background scrolling while open, and keeps output readable on small screens.
-- Selected projects with direct links to source repositories.
+- Selected projects with direct links to source repositories, evidence-led outcome labels where documented, and animated category filters for Language AI, Agentic AI, and Applied AI.
+- Animated research briefings that transition between Balochi AI nodes, with accessible selected-state semantics.
 - Sticky responsive navigation, scroll-triggered section reveals, orbital motion, animated capability cards, and a subtle reading-progress indicator.
 - Accessible skip link, semantic navigation landmarks, keyboard focus states, and reduced-motion support.
 - Social metadata and search indexing metadata.
