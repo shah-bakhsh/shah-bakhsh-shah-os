@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent }
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { AnimatePresence, motion, MotionConfig } from "motion/react";
-import { ArrowDown, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck, CornerDownLeft } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpRight, Github, Linkedin, Menu, X, Cpu, Languages, BrainCircuit, ScanText, Terminal, Radio, ShieldCheck, CornerDownLeft } from "lucide-react";
 
 const projects = [
   { code: "01", name: "BalBERT", type: "Language model", category: "Language AI", result: "97.8% perplexity reduction documented", description: "Domain-adaptive language representation work focused on strengthening NLP foundations for Balochi.", tags: ["Transformers", "XLM-R", "NLP"], href: "https://github.com/shah-bakhsh/BalBERT" },
@@ -165,7 +165,7 @@ export default function Home() {
   const nav = [{ label: "About", href: "#about" }, { label: "Superpowers", href: "#superpowers" }, { label: "Research Lab", href: "#lab" }, { label: "Projects", href: "#projects" }];
 
   return (
-    <MotionConfig reducedMotion="user"><a href="#main-content" className="sr-only z-[90] rounded-full bg-[#f5c518] px-4 py-3 font-semibold text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a><main id="main-content" className="overflow-x-clip"><motion.div aria-hidden="true" className="fixed left-0 right-0 top-0 z-[70] h-[2px] origin-left bg-[#f5c518] shadow-[0_0_14px_rgba(245,197,24,.75)]" style={{ scaleX: scrollProgress }} />
+    <MotionConfig reducedMotion="user"><a href="#main-content" className="sr-only z-[90] rounded-full bg-[#f5c518] px-4 py-3 font-semibold text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a><main id="main-content" className="overflow-x-clip">
       <motion.header initial={{ y: -24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.65, ease: "easeOut" }} className="sticky top-0 z-50 border-b border-white/[.08] bg-[#08090a]/80 backdrop-blur-2xl">
         <div className="shell flex h-[76px] items-center justify-between">
           <a href="#" className="flex items-center gap-3" aria-label="SHAH.OS home">
@@ -175,7 +175,7 @@ export default function Home() {
           <nav aria-label="Primary navigation" className="hidden items-center gap-8 md:flex">
             {nav.map(item => <a key={item.label} href={item.href} className="text-xs text-white/60 transition hover:text-[#f5c518]">{item.label}</a>)}
           </nav>
-          <div className="hidden items-center gap-3 sm:flex"><button onClick={openTerminal} className="inline-flex items-center gap-2 rounded-full border border-[#f5c518]/35 px-4 py-2 text-xs text-[#f5c518] transition hover:bg-[#f5c518] hover:text-black"><Terminal size={14} /> Open terminal <span className="text-[9px] opacity-60">/</span></button><a href="mailto:shahbakhshtech@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518]">Let&apos;s connect <ArrowUpRight size={14} /></a></div>
+          <div className="hidden items-center gap-3 md:flex"><button onClick={openTerminal} className="inline-flex items-center gap-2 rounded-full border border-[#f5c518]/35 px-4 py-2 text-xs text-[#f5c518] transition hover:bg-[#f5c518] hover:text-black"><Terminal size={14} /> Open terminal <span className="text-[9px] opacity-60">/</span></button><a href="mailto:shahbakhshtech@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518]">Let&apos;s connect <ArrowUpRight size={14} /></a></div>
           <button className="grid size-11 place-items-center rounded-full border border-white/10 text-white/75 transition hover:border-[#f5c518]/50 hover:text-[#f5c518] md:hidden" aria-label="Toggle navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button>
         </div>
         {menuOpen && <motion.nav aria-label="Mobile navigation" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="shell flex flex-col gap-1 border-t border-white/[.06] pb-5 pt-3 md:hidden">{nav.map(item => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 text-sm text-white/70 transition hover:bg-white/[.04] hover:text-[#f5c518]">{item.label}</a>)}<button onClick={() => { setMenuOpen(false); openTerminal(); }} className="mt-2 flex min-h-11 items-center gap-2 rounded-xl bg-[#f5c518] px-4 text-left text-sm font-semibold text-black"><Terminal size={16} /> Open command terminal</button></motion.nav>}
@@ -257,6 +257,30 @@ export default function Home() {
       </motion.section>
 
       <footer aria-label="Footer" className="border-t border-white/10 py-8"><div className="shell flex flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left"><div><p className="text-sm font-bold tracking-[.16em]">SHAH<span className="text-[#f5c518]">.OS</span></p><p className="mt-2 text-[10px] text-white/30">Designed and built by Shah Bakhsh</p></div><div className="flex items-center gap-5 text-white/45"><a href="https://github.com/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[#f5c518]"><Github size={17} /></a><a href="https://linkedin.com/in/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[#f5c518]"><Linkedin size={17} /></a><a href="mailto:shahbakhshtech@gmail.com" aria-label="Email" className="transition hover:text-[#f5c518]"><ShieldCheck size={17} /></a></div><p className="text-[10px] text-white/25">© 2026 SHAH.OS · Built for the curious.</p></div></footer>
+
+      <AnimatePresence>
+        {scrollProgress > 0.04 && !terminalOpen && (
+          <motion.button
+            type="button"
+            aria-label="Back to top"
+            title="Back to top"
+            initial={{ opacity: 0, y: 14, scale: .88 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: .9 }}
+            whileHover={{ y: -3, scale: 1.04 }}
+            whileTap={{ scale: .94 }}
+            transition={{ duration: .22, ease: "easeOut" }}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="fixed bottom-5 right-5 z-[80] grid h-12 w-12 place-items-center rounded-full border border-[#f5c518]/45 bg-[#11120f]/90 text-[#f5c518] shadow-[0_8px_32px_rgba(0,0,0,.42),0_0_24px_rgba(245,197,24,.10)] backdrop-blur-xl transition hover:border-[#f5c518] hover:bg-[#f5c518] hover:text-black sm:bottom-7 sm:right-7"
+          >
+            <svg aria-hidden="true" viewBox="0 0 36 36" className="absolute inset-0 h-full w-full -rotate-90">
+              <circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" strokeOpacity=".16" strokeWidth="1.4" />
+              <circle cx="18" cy="18" r="16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeDasharray="100.53" strokeDashoffset={100.53 * (1 - scrollProgress)} />
+            </svg>
+            <ArrowUp size={18} strokeWidth={2.2} />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {terminalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-3 backdrop-blur-md sm:p-6" onMouseDown={(event) => { if (event.target === event.currentTarget) closeTerminal(); }}>
