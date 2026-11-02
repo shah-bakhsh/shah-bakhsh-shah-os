@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://main.d1ntac4l6t7hsd.amplifyapp.com"),
+  alternates: { canonical: "/" },
   title: {
     default: "SHAH.OS | Shah Bakhsh, AI Engineer",
     template: "%s | SHAH.OS"
@@ -13,7 +15,8 @@ export const metadata: Metadata = {
     title: "SHAH.OS | AI should speak every language.",
     description: "A personal AI engineering portfolio and an open mission to advance low-resource language technology.",
     type: "website",
-    siteName: "SHAH.OS"
+    siteName: "SHAH.OS",
+    url: "https://main.d1ntac4l6t7hsd.amplifyapp.com"
   },
   twitter: {
     card: "summary_large_image",
