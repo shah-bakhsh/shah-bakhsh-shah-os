@@ -82,9 +82,11 @@ export const metadata: Metadata = {
     locale: "en_US",
     firstName: "Shah",
     lastName: "Bakhsh",
+    images: [{ url: "https://avatars.githubusercontent.com/u/226354638?v=4", width: 112, height: 112, alt: "Shah Bakhsh — AI Engineer" }],
   },
   twitter: {
     card: "summary",
+    images: ["https://avatars.githubusercontent.com/u/226354638?v=4"],
     title: "Shah Bakhsh | SHAH.OS",
     description,
   },
