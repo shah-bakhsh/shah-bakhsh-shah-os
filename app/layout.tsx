@@ -1,29 +1,49 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+const siteUrl = "https://shahbakhsh.tech";
+const description =
+  "Explore Shah Bakhsh's work in AI engineering, language models, agentic systems, and Balochi NLP research.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://main.d1ntac4l6t7hsd.amplifyapp.com"),
-  alternates: { canonical: "/" },
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "SHAH.OS | Shah Bakhsh, AI Engineer",
-    template: "%s | SHAH.OS"
+    default: "Shah Bakhsh | AI Engineer & Balochi NLP Researcher — SHAH.OS",
+    template: "%s | SHAH.OS",
   },
-  description: "AI engineering, agentic systems, and a mission to bring Balochi language technology into the future.",
+  description,
   applicationName: "SHAH.OS",
-  keywords: ["Shah Bakhsh", "AI Engineer", "LLM Engineer", "Agentic AI", "Balochi NLP", "Low-resource language technology", "Machine Learning"],
+  alternates: { canonical: "/" },
+  keywords: [
+    "Shah Bakhsh",
+    "SHAH.OS",
+    "AI Engineer",
+    "Balochi NLP",
+    "Balochi AI",
+    "Language Models",
+    "Agentic AI",
+    "Low-resource languages",
+    "Machine Learning",
+  ],
   openGraph: {
-    title: "SHAH.OS | AI should speak every language.",
-    description: "A personal AI engineering portfolio and an open mission to advance low-resource language technology.",
+    title: "Shah Bakhsh | AI Engineer & Balochi NLP Researcher",
+    description,
     type: "website",
     siteName: "SHAH.OS",
-    url: "https://main.d1ntac4l6t7hsd.amplifyapp.com"
+    url: siteUrl,
+    locale: "en_US",
   },
   twitter: {
-    card: "summary_large_image",
-    title: "SHAH.OS | Shah Bakhsh",
-    description: "Building intelligent systems. Advancing low-resource language AI."
+    card: "summary",
+    title: "Shah Bakhsh | SHAH.OS",
+    description,
   },
-  robots: { index: true, follow: true }
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  category: "technology",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
