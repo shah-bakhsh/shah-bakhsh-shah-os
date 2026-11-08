@@ -163,7 +163,7 @@ export default function Home() {
     };
   }, []);
 
-  const nav = [{ label: "About", href: "#about" }, { label: "Superpowers", href: "#superpowers" }, { label: "Research Lab", href: "#lab" }, { label: "Projects", href: "#projects" }];
+  const nav = [{ label: "About", href: "/about/" }, { label: "Research", href: "/research/" }, { label: "Projects", href: "/projects/" }, { label: "Contact", href: "/contact/" }];
 
   return (
     <MotionConfig reducedMotion="user"><a href="#main-content" className="sr-only z-[90] rounded-full bg-[#f5c518] px-4 py-3 font-semibold text-black focus:not-sr-only focus:fixed focus:left-4 focus:top-4">Skip to content</a><main id="main-content" className="overflow-x-clip">
@@ -173,10 +173,10 @@ export default function Home() {
             <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#f5c518] text-sm font-black text-black">S.</span>
             <span className="text-sm font-bold tracking-[.16em]">SHAH<span className="text-[#f5c518]">.OS</span></span>
           </a>
-          <nav aria-label="Primary navigation" className="hidden items-center gap-8 md:flex">
+          <nav aria-label="Primary navigation" className="hidden items-center gap-5 md:flex">
             {nav.map(item => <a key={item.label} href={item.href} className="text-xs text-white/60 transition hover:text-[#f5c518]">{item.label}</a>)}
           </nav>
-          <div className="hidden items-center gap-3 md:flex"><button onClick={openTerminal} className="inline-flex items-center gap-2 rounded-full border border-[#f5c518]/35 px-4 py-2 text-xs text-[#f5c518] transition hover:bg-[#f5c518] hover:text-black"><Terminal size={14} /> Open terminal <span className="text-[9px] opacity-60">/</span></button><a href="mailto:shahbakhshtech@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518]">Let&apos;s connect <ArrowUpRight size={14} /></a></div>
+          <div className="hidden items-center gap-3 md:flex"><button onClick={openTerminal} className="inline-flex items-center gap-2 rounded-full border border-[#f5c518]/35 px-4 py-2 text-xs text-[#f5c518] transition hover:bg-[#f5c518] hover:text-black"><Terminal size={14} /> Open terminal <span className="text-[9px] opacity-60">/</span></button><a href="mailto:shahbakhshtech@gmail.com" className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs transition hover:border-[#f5c518] hover:text-[#f5c518]">Contact <ArrowUpRight size={14} /></a></div>
           <button className="grid size-11 place-items-center rounded-full border border-white/10 text-white/75 transition hover:border-[#f5c518]/50 hover:text-[#f5c518] md:hidden" aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"} aria-controls="mobile-navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X size={19} /> : <Menu size={19} />}</button>
         </div>
         {menuOpen && <motion.nav id="mobile-navigation" aria-label="Mobile navigation" initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} className="shell flex flex-col gap-1 border-t border-white/[.06] pb-5 pt-3 md:hidden">{nav.map(item => <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)} className="rounded-xl px-3 py-3 text-sm text-white/70 transition hover:bg-white/[.04] hover:text-[#f5c518]">{item.label}</a>)}<button onClick={() => { setMenuOpen(false); openTerminal(); }} className="mt-2 flex min-h-11 items-center gap-2 rounded-xl bg-[#f5c518] px-4 text-left text-sm font-semibold text-black"><Terminal size={16} /> Open command terminal</button></motion.nav>}
@@ -258,6 +258,24 @@ export default function Home() {
       <motion.section initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.12 }} transition={{ duration: 0.72, ease: "easeOut" }} className="section-pad">
         <div className="shell"><div className="panel relative overflow-hidden p-8 md:p-14"><div className="absolute -right-20 -top-28 h-80 w-80 rounded-full bg-[#f5c518]/10 blur-[90px]" /><div className="relative max-w-3xl"><p className="eyebrow mb-6">05 / The next collaboration</p><h2 className="text-5xl font-semibold leading-[.98] tracking-[-.06em] md:text-7xl">Have a meaningful problem? <span className="gold">Let&apos;s build.</span></h2><p className="mt-7 max-w-xl text-sm leading-7 text-white/50">I&apos;m interested in research, open-source collaboration, and building AI tools with real-world value. Reach out and let&apos;s start a conversation.</p><a href="mailto:shahbakhshtech@gmail.com" className="mt-9 inline-flex items-center gap-3 rounded-full bg-[#f5c518] px-6 py-3.5 text-sm font-bold text-black transition hover:bg-white">Contact me <ArrowUpRight size={16} /></a></div></div></div>
       </motion.section>
+
+      <section aria-label="Explore SHAH.OS in depth" className="border-t border-white/10 py-20">
+        <div className="shell">
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
+            <div><p className="eyebrow mb-4">Go deeper / SHAH.OS</p><h2 className="section-title">Beyond the homepage<span className="gold">.</span></h2></div>
+            <p className="max-w-sm text-sm leading-7 text-white/50">Explore documented research outcomes, engineering experiments and collaboration opportunities.</p>
+          </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            {[{href:"/research/",label:"Research archive",detail:"Six research briefings with methods, outcomes and limitations",num:"01"},
+              {href:"/projects/",label:"Selected projects",detail:"Applied AI concepts, experiments and source repositories",num:"02"},
+              {href:"/about/",label:"About Shah",detail:"A closer look at the mission and engineering approach",num:"03"}].map(item=>
+              <Link key={item.href} href={item.href} className="panel group flex min-h-60 flex-col justify-between p-7 transition hover:-translate-y-1 hover:border-[#f5c518]/40">
+                <span className="text-xs tracking-widest text-[#f5c518]">{item.num} / EXPLORE ↗</span>
+                <div><h3 className="text-2xl font-semibold">{item.label}</h3><p className="mt-3 text-sm leading-7 text-white/50">{item.detail}</p></div>
+              </Link>)}
+          </div>
+        </div>
+      </section>
 
       <footer aria-label="Footer" className="border-t border-white/10 py-8"><div className="shell flex flex-col items-center justify-between gap-5 text-center sm:flex-row sm:text-left"><div><p className="text-sm font-bold tracking-[.16em]">SHAH<span className="text-[#f5c518]">.OS</span></p><p className="mt-2 text-[10px] text-white/30">Designed and built by Shah Bakhsh</p></div><div className="flex items-center gap-5 text-white/45"><Link href="/links/" className="text-xs transition hover:text-[#f5c518]" aria-label="All professional profiles">All profiles</Link><a href="https://github.com/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="GitHub" className="transition hover:text-[#f5c518]"><Github size={17} /></a><a href="https://linkedin.com/in/shah-bakhsh" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="transition hover:text-[#f5c518]"><Linkedin size={17} /></a><a href="mailto:shahbakhshtech@gmail.com" aria-label="Email" className="transition hover:text-[#f5c518]"><ShieldCheck size={17} /></a></div><p className="text-[10px] text-white/25">© 2026 SHAH.OS · Built for the curious.</p></div></footer>
 
