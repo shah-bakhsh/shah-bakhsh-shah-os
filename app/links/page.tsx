@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Shah Bakhsh — Official Profiles & Research Links",
@@ -20,7 +21,7 @@ export default function LinksPage() {
   return (
     <main className="min-h-screen bg-[#090a0b] px-5 py-20 text-white">
       <div className="mx-auto max-w-3xl">
-        <a href="/" className="text-sm text-[#f5c518] hover:underline">← SHAH.OS home</a>
+        <Link href="/" className="text-sm text-[#f5c518] hover:underline">← SHAH.OS home</Link>
         <p className="mt-12 text-xs uppercase tracking-[.2em] text-[#f5c518]">Official profiles & research</p>
         <h1 className="mt-5 text-5xl font-semibold tracking-tight sm:text-6xl">Shah Bakhsh</h1>
         <p className="mt-5 text-lg text-white/70">
@@ -52,7 +53,7 @@ export default function LinksPage() {
         <footer className="mt-16 border-t border-white/10 pt-6 text-sm text-white/50">
           <a href="mailto:shahbakhshtech@gmail.com" className="hover:text-[#f5c518]">Contact for research or collaboration</a>
           <span className="mx-3">·</span>
-          <a href="/" className="hover:text-[#f5c518]">shahbakhsh.tech</a>
+          <Link href="/" className="hover:text-[#f5c518]">shahbakhsh.tech</Link>
         </footer>
       </div>
     </main>
