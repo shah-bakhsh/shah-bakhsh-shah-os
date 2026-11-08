@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SHAH.OS">
+<rect width="64" height="64" rx="16" fill="#08090a"/>
+<rect x="2" y="2" width="60" height="60" rx="14" fill="none" stroke="#f5c518" stroke-opacity=".38"/>
+<path d="M41 18c-4-3-9-5-15-3-7 2-11 8-10 15 1 5 6 8 14 9 7 1 9 3 8 6-2 5-12 6-20 0" fill="none" stroke="#f5c518" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="46" cy="46" r="5" fill="#f5c518"/>
+</svg>
