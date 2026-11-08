@@ -62,17 +62,34 @@ npm run build
 
 The project uses Next.js static export (`output: "export"`). Next.js generates the deployable static site in `out/`. For AWS Amplify with Next.js 14 or later and a repository-level `amplify.yml`, AWS documents `.next` as the build artifact directory; Amplify's Next.js hosting integration handles the static export output.
 
-## AWS Amplify Hosting
+## Vercel production deployment
 
-The repository's `amplify.yml` installs dependencies, runs the TypeScript check and Next.js production build, and uses `.next` as the Amplify artifact directory for Next.js 14+ static export.
+The canonical production site is **https://shahbakhsh.tech**, hosted through Vercel from the GitHub `main` branch.
 
-1. Open the [AWS Amplify console](https://console.aws.amazon.com/amplify/home).
-2. Choose **Deploy an app** and connect GitHub.
-3. Select `shah-bakhsh/shah-bakhsh-shah-os` and the `main` branch.
-4. Keep the repository build specification. It uses `npm run build` and the `.next` artifact directory.
-5. Deploy and verify the generated public URL in a private browser window.
+- Framework: Next.js 15 App Router, React 19 and TypeScript.
+- Project output: static export, configured in `next.config.ts`.
+- Validation: `npm run typecheck`, `npm run lint`, `npm run build`.
+- Vercel's connected Git integration deploys the `main` branch automatically.
+- DNS is managed separately at the domain registrar / authoritative DNS provider.
 
-**Deployment status:** The repository is configured for Amplify Hosting. An AWS Amplify app and public AWS deployment URL have not yet been verified, so no AWS deployment is claimed.
+## Website pages
+
+- `/` — signature animated portfolio, research explorer and terminal.
+- `/about/` — engineering background and mission.
+- `/research/` — documented Balochi NLP work.
+- `/research/[slug]/` — case study briefings for BalBERT, BalPOS, BalNER, BalTokenizer, BalNLP and BalOCR.
+- `/projects/` — selected applied AI experiments.
+- `/contact/` — collaboration and professional contact.
+- `/links/` — professional profile directory.
+
+The case studies explicitly distinguish documented evaluation results from exploratory work. Search metadata includes canonical URLs, Person structured data and a generated sitemap.
+
+## Search launch checklist
+
+1. Confirm Vercel shows a Ready production deployment with HTTPS for `shahbakhsh.tech`.
+2. Verify `/robots.txt` and `/sitemap.xml` are accessible.
+3. Verify domain ownership and submit the sitemap in Google Search Console.
+4. Keep professional external profiles consistent with the canonical website.
 
 ## Project links
 
