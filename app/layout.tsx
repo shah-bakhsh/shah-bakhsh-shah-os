@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-const siteUrl = "https://shahbakhsh.tech";
+const siteUrl = "https://www.shahbakhsh.tech";
 const description =
   "Shah Bakhsh is an AI engineer working on LLMs, agentic AI, RAG, and Balochi language technology. Explore research, open-source projects, and collaboration opportunities.";
 
@@ -40,6 +40,7 @@ const structuredData = {
       "@type": "WebSite",
       "@id": `${siteUrl}/#website`,
       name: "SHAH.OS",
+      alternateName: "Shah Bakhsh",
       url: `${siteUrl}/`,
       description,
       inLanguage: "en",

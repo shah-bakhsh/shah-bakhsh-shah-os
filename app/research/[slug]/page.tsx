@@ -12,7 +12,7 @@ export async function generateMetadata({params}:Props):Promise<Metadata>{
  if(!p) return {title:"Research"};
  return {title:`${p.name} — Balochi NLP Research & Evaluation`,description:p.summary,
   alternates:{canonical:`/research/${p.slug}/`},
-  openGraph:{title:`${p.name} | SHAH.OS Research`,description:p.summary,url:`https://shahbakhsh.tech/research/${p.slug}/`}};
+  openGraph:{title:`${p.name} | SHAH.OS Research`,description:p.summary,url:`https://www.shahbakhsh.tech/research/${p.slug}/`}};
 }
 export default async function CaseStudy({params}:Props){
  const {slug}=await params;const p=researchProjects.find(x=>x.slug===slug);
