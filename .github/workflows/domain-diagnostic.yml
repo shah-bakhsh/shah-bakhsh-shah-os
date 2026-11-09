@@ -1,0 +1,53 @@
+name: Public domain and crawler access diagnostic
+on:
+  push:
+    branches:
+      - diagnostic/public-search-access-2026
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check-domain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify public DNS and HTTPS endpoints
+        shell: bash
+        run: |
+          set +e
+          echo '### DNS checks'
+          for host in shahbakhsh.tech www.shahbakhsh.tech; do
+            echo "=== ${host}"
+            getent ahostsv4 "$host" | head -4
+            nslookup "$host" || true
+          done
+          echo '### HTTP headers and redirects'
+          for url in \
+            https://shahbakhsh.tech/ \
+            https://www.shahbakhsh.tech/ \
+            https://shahbakhsh.tech/sitemap.xml \
+            https://shahbakhsh.tech/robots.txt \
+            https://shahbakhsh.tech/about/; do
+            echo "=== ${url}"
+            curl --location --silent --show-error --max-time 18 --output /tmp/site-body --dump-header /tmp/site-head --write-out 'FINAL_URL:%{url_effective} HTTP_STATUS:%{http_code} IP:%{remote_ip}\n' "$url"
+            head -16 /tmp/site-head
+            if [[ "$url" == *sitemap.xml ]]; then
+              head -c 500 /tmp/site-body
+              echo
+            fi
+            if [[ "$url" == *robots.txt ]]; then
+              head -c 500 /tmp/site-body
+              echo
+            fi
+            if [[ "$url" == https://shahbakhsh.tech/ ]]; then
+              python3 - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("/tmp/site-body").read_text(errors="replace")
+          print("TITLE:", re.findall(r"<title[^>]*>(.*?)</title>",s,re.I|re.S)[:1])
+          print("CANONICAL:",re.findall(r'<link[^>]+rel="canonical"[^>]+>',s,re.I)[:2])
+          print("ROBOTS_META:",re.findall(r'<meta[^>]+name="robots"[^>]+>',s,re.I)[:2])
+          print("HAS_LD_JSON:",'application/ld+json' in s)
+          PY
+            fi
+          done
