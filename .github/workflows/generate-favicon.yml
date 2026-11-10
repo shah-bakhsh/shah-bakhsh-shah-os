@@ -1,0 +1,47 @@
+name: Generate branded search favicons
+on:
+  push:
+    branches: [fix/google-search-favicon-png]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: github.ref == 'refs/heads/fix/google-search-favicon-png'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Install rendering tools
+        run: python -m pip install --disable-pip-version-check --break-system-packages cairosvg pillow
+      - name: Render favicon variants from existing SHAH.OS brand asset
+        run: |
+          python - <<'PY'
+          import io
+          from pathlib import Path
+          import cairosvg
+          from PIL import Image
+          svg=Path("public/favicon.svg").read_bytes()
+          for size in (96,192):
+              rendered=cairosvg.svg2png(bytestring=svg,output_width=size,output_height=size)
+              Path(f"public/favicon-{size}x{size}.png").write_bytes(rendered)
+          png=cairosvg.svg2png(bytestring=svg,output_width=180,output_height=180)
+          Path("public/apple-touch-icon.png").write_bytes(png)
+          master=Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg,output_width=256,output_height=256))).convert("RGBA")
+          master.save("public/favicon.ico",format="ICO",sizes=[(16,16),(32,32),(48,48),(64,64),(96,96),(128,128),(256,256)])
+          for p in ("favicon.ico","favicon-96x96.png","favicon-192x192.png","apple-touch-icon.png"):
+              item=Path("public")/p
+              print(p,item.stat().st_size,"bytes")
+          PY
+      - name: Commit generated brand files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/favicon.ico public/favicon-96x96.png public/favicon-192x192.png public/apple-touch-icon.png
+          if ! git diff --cached --quiet; then
+            git commit -m "assets: add Google-compatible SHAH.OS favicon files [skip ci]"
+            git push
+          fi
